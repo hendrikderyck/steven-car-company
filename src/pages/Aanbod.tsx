@@ -13,7 +13,7 @@ export function Aanbod() {
             Ons aanbod
           </h1>
           <p className="font-body text-white/70 mt-5 max-w-2xl leading-relaxed">
-            Onderstaande wagens zijn een mockup. Later wordt deze pagina automatisch gevoed via AutoScout24 – u blijft op onze site, geen doorverwijzing naar externe pagina's.
+            Onze actuele voorraad jonge occasions. Zorgvuldig geselecteerd, eerlijk geprijsd. Kom gerust langs op afspraak of bel voor meer info.
           </p>
           <div className="mt-8 flex items-center gap-3 font-body text-sm text-white/60">
             <span className="flex gap-0.5 text-accent">★★★★★</span>

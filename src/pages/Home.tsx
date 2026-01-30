@@ -22,7 +22,7 @@ export function Home() {
   return (
     <>
       {/* Hero – editorial noir, gradient + noise, staggered copy */}
-      <section className="relative min-h-[75vh] flex flex-col justify-center hero-gradient text-white overflow-hidden">
+      <section className="relative min-h-[calc(100vh-7rem)] md:min-h-[calc(100vh-4rem)] flex flex-col justify-center hero-gradient text-white overflow-hidden">
         <video
           autoPlay
           muted
