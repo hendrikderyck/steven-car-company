@@ -13,7 +13,7 @@ Website voor Steven Car Company BV (Ninove): aan- en verkoop van jonge occasions
 
 ## Sitemap
 
-- **Home** – Intro, sfeer, uitgelichte wagens, 5★ Autoscout24 reviews, Bel nu CTA
+- **Home** – Intro, sfeer, CTA naar aanbod, 5★ Autoscout24 reviews, Bel nu CTA
 - **Aanbod** – Overzicht wagens (nu mockdata, later AutoScout24 API)
 - **Diensten** – Aan- en verkoop, overname mogelijk
 - **Over Ons** – Verhaal van Steven, gezicht achter de zaak

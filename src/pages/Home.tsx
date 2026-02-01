@@ -1,9 +1,5 @@
 import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
-import { CarCard } from "../components/CarCard"
-import { mockCars } from "../data/cars"
-
-const featuredCars = mockCars.slice(0, 3)
 
 const container = {
   hidden: { opacity: 0 },
@@ -61,12 +57,20 @@ export function Home() {
                 </div>
                 <span className="font-body text-sm text-white/60">46+ reviews op AutoScout24</span>
               </div>
-              <a
-                href="tel:0487450331"
-                className="inline-flex items-center font-display font-semibold text-ink bg-white px-6 py-3.5 rounded-sm tracking-tight hover:bg-white/90 transition"
-              >
-                Bel nu · 0487 45 03 31
-              </a>
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                <Link
+                  to="/aanbod"
+                  className="inline-flex items-center font-display font-semibold text-white border-2 border-white px-6 py-3.5 rounded-sm tracking-tight hover:bg-white hover:text-ink transition"
+                >
+                  Bekijk aanbod
+                </Link>
+                <a
+                  href="tel:0487450331"
+                  className="inline-flex items-center font-display font-semibold text-ink bg-white px-6 py-3.5 rounded-sm tracking-tight hover:bg-white/90 transition"
+                >
+                  Bel nu · 0487 45 03 31
+                </a>
+              </div>
             </motion.div>
             <motion.p variants={item} className="font-body text-white/50 text-sm mt-6">
               7/7 open op afspraak · Overname mogelijk
@@ -75,49 +79,28 @@ export function Home() {
         </div>
       </section>
 
-      {/* Uitgelichte wagens – grid + subtle background */}
+      {/* CTA naar aanbod – duidelijke flow zonder wagens op home */}
       <section className="relative py-20 sm:py-28 bg-editorial">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-12"
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.5 }}
+          className="max-w-2xl mx-auto px-4 sm:px-6 text-center"
+        >
+          <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-ink tracking-tight">
+            Bekijk ons aanbod
+          </h2>
+          <p className="font-body text-muted mt-4 leading-relaxed">
+            Jonge occasions, zorgvuldig geselecteerd. Transparante prijzen en duidelijke info. Geen testritten – wel een afspraak om de wagen te bekijken.
+          </p>
+          <Link
+            to="/aanbod"
+            className="inline-flex items-center font-display font-semibold text-ink bg-white border border-border px-6 py-3.5 rounded-sm mt-8 tracking-tight hover:bg-surface hover:border-ink/20 transition"
           >
-            <div>
-              <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-ink tracking-tight">
-                Uitgelichte wagens
-              </h2>
-              <p className="font-body text-muted mt-2">Onze actuele voorraad.</p>
-            </div>
-            <Link
-              to="/aanbod"
-              className="font-display font-semibold text-ink text-sm tracking-tight hover:underline underline-offset-4 shrink-0"
-            >
-              Bekijk volledig aanbod →
-            </Link>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.4, delay: 0.1 }}
-            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {featuredCars.map((car, i) => (
-              <motion.div
-                key={car.id}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: 0.05 * i }}
-              >
-                <CarCard car={car} featured />
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
+            Naar het aanbod →
+          </Link>
+        </motion.div>
       </section>
 
       {/* Waarom wij – numbered blocks */}

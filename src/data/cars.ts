@@ -1,4 +1,5 @@
-// Mock data – later vervangen door Autoscout24 API
+// Data van AutoScout24 dealerpagina Steven Car Company BV
+// https://www.autoscout24.be/nl/verkopers/steven-car-company-bv
 export interface Car {
   id: string
   title: string
@@ -16,9 +17,27 @@ export interface Car {
   btwAftrekbaar?: boolean
 }
 
+// AutoScout24 CDN: path eindigt op .jpg, size bv. 250x188 of 800x600
+const AS24_IMG = (path: string, size = "800x600") =>
+  `https://prod.pictures.autoscout24.net/listing-images/${path}/${size}.webp`
+
 export const mockCars: Car[] = [
   {
     id: "1",
+    title: "BMW 118",
+    brand: "BMW",
+    model: "118",
+    price: 16999,
+    km: 67502,
+    year: "02/2019",
+    power: "136 PK (100 kW)",
+    fuel: "Benzine",
+    transmission: "Manueel",
+    features: ["FULL LED", "M PACK", "LEDER", "A/C", "PDC", "1 Jaar Garantie", "Car-Pass", "keuring op 90 extra punten"],
+    imageUrl: AS24_IMG("6b17f310-39a7-4f10-aa7f-4aafa0fde646_affd668b-2687-432b-9c48-10ce2281bed6.jpg"),
+  },
+  {
+    id: "2",
     title: "Peugeot 208",
     brand: "Peugeot",
     model: "208",
@@ -29,12 +48,12 @@ export const mockCars: Car[] = [
     power: "75 PK (55 kW)",
     fuel: "Benzine",
     transmission: "Manueel",
-    features: ["FULL LED", "NAVI", "CAMERA", "CARPLAY", "AIRCO", "1 Jaar Garantie", "Car-Pass"],
-    imageUrl: "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&q=80",
+    features: ["FULL LED", "NAVI", "CAMERA", "CARPLAY", "AIRCO"],
+    imageUrl: AS24_IMG("e0c05bd4-f8f0-43bb-9a59-bc244fe444e7_c40f551b-8c5e-4d72-b3a5-769fc02a4ceb.jpg"),
     btwAftrekbaar: true,
   },
   {
-    id: "2",
+    id: "3",
     title: "Citroën C3 Aircross",
     brand: "Citroën",
     model: "C3 Aircross",
@@ -46,23 +65,7 @@ export const mockCars: Car[] = [
     fuel: "Benzine",
     transmission: "Manueel",
     features: ["LED", "NAVI", "CRUISE", "A/C", "CARPLAY"],
-    imageUrl: "https://images.unsplash.com/photo-1619767886558-efdc259cde1a?w=800&q=80",
-    btwAftrekbaar: true,
-  },
-  {
-    id: "3",
-    title: "Peugeot 208",
-    brand: "Peugeot",
-    model: "208",
-    price: 12450,
-    priceExclBtw: 10743,
-    km: 30485,
-    year: "01/2023",
-    power: "75 PK (55 kW)",
-    fuel: "Benzine",
-    transmission: "Manueel",
-    features: ["LED", "NAVI", "CARPLAY", "AIRCO", "PDC", "LANE ASSIST"],
-    imageUrl: "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&q=80",
+    imageUrl: AS24_IMG("20f002af-7273-4d19-aa84-33461b00b8e1_a409b541-8c27-4e56-b33c-822e17a86dfb.jpg"),
     btwAftrekbaar: true,
   },
   {
@@ -83,20 +86,6 @@ export const mockCars: Car[] = [
   },
   {
     id: "5",
-    title: "BMW 118",
-    brand: "BMW",
-    model: "118",
-    price: 16999,
-    km: 67502,
-    year: "02/2019",
-    power: "136 PK (100 kW)",
-    fuel: "Benzine",
-    transmission: "Manueel",
-    features: ["FULL LED", "M PACK", "LEDER", "A/C", "PDC"],
-    imageUrl: "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80",
-  },
-  {
-    id: "6",
     title: "Volvo XC40",
     brand: "Volvo",
     model: "XC40",
@@ -108,6 +97,22 @@ export const mockCars: Car[] = [
     transmission: "Manueel",
     features: ["FULL LED", "NAVI", "CAMERA", "PDC", "CARPLAY"],
     imageUrl: "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?w=800&q=80",
+  },
+  {
+    id: "6",
+    title: "Peugeot Partner",
+    brand: "Peugeot",
+    model: "Partner",
+    price: 12450,
+    priceExclBtw: 10289,
+    km: 112984,
+    year: "01/2021",
+    power: "102 PK (75 kW)",
+    fuel: "Diesel",
+    transmission: "Manueel",
+    features: ["BTW INCL", "L2", "A/C", "CRUISE", "CARPLAY"],
+    imageUrl: "https://images.unsplash.com/photo-1625047509168-a7026f36de04?w=800&q=80",
+    btwAftrekbaar: true,
   },
   {
     id: "7",
@@ -122,7 +127,7 @@ export const mockCars: Car[] = [
     fuel: "Diesel",
     transmission: "Manueel",
     features: ["BTW INCL", "LED", "CAMERA", "PDC", "A/C", "BLUETOOTH"],
-    imageUrl: "https://images.unsplash.com/photo-1625047509168-a7026f36de04?w=800&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&q=80",
     btwAftrekbaar: true,
   },
 ]
