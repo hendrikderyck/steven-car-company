@@ -28,6 +28,15 @@ import { HomeHero } from '../components/HomeHero';
       height: 100%;
       object-fit: cover;
     }
+    /* Hide native play button when autoplay is blocked (e.g. iPhone Low Power Mode) */
+    .home-hero-bg::-webkit-media-controls-start-playback-button {
+      display: none !important;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .home-hero-bg::-webkit-media-controls-panel {
+      display: none !important;
+    }
     .home-hero-overlay {
       position: absolute;
       inset: 0;
