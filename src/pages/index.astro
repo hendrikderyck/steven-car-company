@@ -84,7 +84,18 @@ import { HomeHero } from '../components/HomeHero';
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      gap: 0;
+      gap: 0.5rem;
+    }
+    @media (max-width: 479px) {
+      .home-hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+      }
+      .home-hero-actions .home-hero-cta {
+        width: 100%;
+      }
+      .home-hero-cta + .home-hero-cta { margin-left: 0; }
     }
     .home-hero-cta {
       display: inline-flex;
@@ -99,7 +110,9 @@ import { HomeHero } from '../components/HomeHero';
       text-decoration: none;
       transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
     }
-    .home-hero-cta + .home-hero-cta { margin-left: -1px; }
+    @media (min-width: 480px) {
+      .home-hero-cta + .home-hero-cta { margin-left: -1px; }
+    }
     .home-hero-cta:focus-visible {
       outline: 1px solid #FFFFFF;
       outline-offset: 2px;
