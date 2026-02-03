@@ -168,6 +168,12 @@ const mapsEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed
       flex-direction: column;
       height: 100%;
     }
+    @media (max-width: 639px) {
+      .contact-card {
+        text-align: center;
+        align-items: center;
+      }
+    }
     @media (min-width: 640px) {
       .contact-card { padding: 2.5rem; }
     }
@@ -239,6 +245,22 @@ const mapsEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed
       font-weight: 700;
       color: #0a0a0a;
     }
+    @media (max-width: 639px) {
+      .contact-table-row {
+        display: block;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      }
+      .contact-table-row:last-child { border-bottom: none; }
+      .contact-table-cell {
+        display: block;
+        padding: 0.125rem 0;
+        text-align: inherit;
+      }
+      .contact-table-cell.contact-table-label {
+        padding-bottom: 0.25rem;
+      }
+    }
 
     .contact-divider-t {
       margin: 0;
@@ -271,6 +293,13 @@ const mapsEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed
       gap: 0;
       border-top: 1px solid rgba(0, 0, 0, 0.12);
       padding-top: 1.5rem;
+    }
+    @media (max-width: 639px) {
+      .contact-actions {
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      .contact-btn + .contact-btn { margin-left: 0; }
     }
     .contact-btn {
       display: inline-flex;

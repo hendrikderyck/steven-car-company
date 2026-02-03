@@ -120,7 +120,7 @@ export function OverOnsPage() {
           transition={{ duration: 0.5, ease }}
         >
           <p className="overons-cta-text">
-            Wilt u één van onze wagens bezichtigen of heeft u specifieke vragen? Wij zijn telefonisch vlot bereikbaar.
+            Wilt u één van onze wagens bezichtigen of heeft u specifieke vragen? Bel ons.
           </p>
           <a href="tel:0487450331" className="overons-cta-link">
             0487 45 03 31
