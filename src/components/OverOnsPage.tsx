@@ -54,7 +54,7 @@ export function OverOnsPage() {
           className="overons-hero-img-wrap"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, ease }}
+          transition={{ delay: 0.4, duration: 0.8, ease }}
         >
           <img src={IMG_INTRO} alt="" />
           <div className="overons-hero-overlay" aria-hidden />
@@ -63,7 +63,7 @@ export function OverOnsPage() {
           className="overons-hero-inner"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6, ease }}
+          transition={{ duration: 0.6, ease }}
         >
           <p className="overons-hero-label">Het verhaal</p>
           <h1 className="overons-hero-title">Over Steven Car Company</h1>
