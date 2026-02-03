@@ -1,0 +1,434 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  headerDark?: boolean;
+}
+
+const { title, description = "Steven Car Company BV – Aan- en verkoop van jonge occasions in Ninove. Eerlijk, persoonlijk, kwaliteit. Overname mogelijk. Bel 0487 45 03 31.", headerDark = false } = Astro.props;
+const pathname = Astro.url.pathname;
+
+const nav = [
+  { href: "/", label: "Home" },
+  { href: "/aanbod/", label: "Aanbod" },
+  { href: "/overname/", label: "Overname" },
+  { href: "/over-ons/", label: "Over Ons" },
+  { href: "/contact/", label: "Contact" },
+];
+
+function isActive(href: string): boolean {
+  if (href === "/") return pathname === "/" || pathname === "";
+  return pathname.startsWith(href);
+}
+
+const addressQuery = encodeURIComponent("Aalstersesteenweg 511A, 9400 Ninove, België");
+const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${addressQuery}`;
+---
+
+<!doctype html>
+<html lang="nl-BE">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class:list={["min-h-screen flex flex-col", headerDark ? "bg-black" : "bg-bg"]}>
+      <header id="site-header" class="header-monolith">
+        <div class="header-inner">
+          <a href="/" class="header-logo-link">
+            <img src="/logo.png" alt="Steven Car Company BV" class="header-logo" />
+          </a>
+          <nav class="header-nav">
+            {nav.map(({ href, label }) => {
+              const active = isActive(href);
+              return (
+                <a
+                  href={href}
+                  class:list={["header-nav-link", active && "header-nav-link-active"]}
+                >
+                  {label}
+                  {active && <span class="header-nav-link-underline" aria-hidden="true" />}
+                </a>
+              );
+            })}
+          </nav>
+          <a href="tel:0487450331" class="header-cta">
+            <span class="header-cta-label">Bel nu</span>
+            <span>0487 45 03 31</span>
+          </a>
+        </div>
+        <div class="header-mobile-nav">
+          {nav.map(({ href, label }) => (
+            <a
+              href={href}
+              class:list={["header-mobile-link", isActive(href) && "header-mobile-link-active"]}
+            >
+              {label}
+            </a>
+          ))}
+        </div>
+      </header>
+      <main class="flex-1">
+        <slot />
+        <!-- Social proof: op elke pagina boven de footer -->
+        <section class="site-social-proof" aria-label="Beoordelingen AutoScout24">
+          <div class="site-social-proof-inner">
+            <div class="site-social-proof-stars" aria-hidden="true">
+              <svg class="site-social-proof-star" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
+              <svg class="site-social-proof-star" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
+              <svg class="site-social-proof-star" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
+              <svg class="site-social-proof-star" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
+              <svg class="site-social-proof-star" viewBox="0 0 24 24" fill="currentColor" aria-hidden><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
+            </div>
+            <p class="site-social-proof-rating">5 sterren</p>
+            <p class="site-social-proof-text">46+ beoordelingen op AutoScout24</p>
+            <a href="https://www.autoscout24.be/nl/verkopers/steven-car-company-bv" target="_blank" rel="noopener noreferrer" class="site-social-proof-link">Bekijk onze reviews →</a>
+          </div>
+        </section>
+      </main>
+      <footer class="footer-monolith">
+        <div class="footer-inner">
+          <div class="footer-main">
+            <a href="/" class="footer-brand">
+              <img src="/logo.png" alt="Steven Car Company BV" class="footer-logo" />
+            </a>
+            <div class="footer-block">
+              <span class="footer-label">Contact</span>
+              <a href={mapsUrl} target="_blank" rel="noopener noreferrer" class="footer-address">Aalstersesteenweg 511A<br />9400 Ninove</a>
+              <a href="tel:0487450331" class="footer-phone">0487 45 03 31</a>
+            </div>
+            <nav class="footer-block footer-sitemap" aria-label="Sitemap">
+              <span class="footer-label">Sitemap</span>
+              <div class="footer-links">
+                {nav.map(({ href, label }) => (
+                  <a href={href} class="footer-sitemap-link">{label}</a>
+                ))}
+              </div>
+            </nav>
+          </div>
+          <div class="footer-bar">
+            <span class="footer-copyright">© {new Date().getFullYear()} Steven Car Company BV</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <style is:global>
+      /* —— Header: Pitch Black & White · Stealth Monolith (always visible) —— */
+      .header-monolith {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: #000000;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        transform: none;
+      }
+      .header-inner {
+        max-width: 72rem;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 4rem;
+        overflow: visible;
+      }
+      @media (min-width: 640px) {
+        .header-inner { padding-left: 1.5rem; padding-right: 1.5rem; }
+      }
+      .header-logo-link {
+        display: flex;
+        align-items: center;
+        margin: -0.5rem 0;
+      }
+      @media (min-width: 640px) {
+        .header-logo-link { margin: -0.75rem 0; }
+      }
+      .header-logo {
+        height: 5rem;
+        width: auto;
+        object-fit: contain;
+        filter: invert(1);
+      }
+      @media (min-width: 640px) {
+        .header-logo { height: 6rem; }
+      }
+      .header-nav {
+        display: none;
+      }
+      @media (min-width: 768px) {
+        .header-nav {
+          display: flex;
+          align-items: center;
+          gap: 2.5rem;
+        }
+      }
+      .header-nav-link {
+        position: relative;
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #FFFFFF;
+        text-decoration: none;
+        padding: 0.25rem 0;
+        transition: opacity 0.2s ease;
+      }
+      .header-nav-link:hover { opacity: 0.85; }
+      .header-nav-link-active { font-weight: 700; }
+      .header-nav-link-underline {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: #FFFFFF;
+      }
+      .header-nav-link:focus-visible,
+      .header-mobile-link:focus-visible,
+      .header-cta:focus-visible {
+        outline: 1px solid #FFFFFF;
+        outline-offset: 2px;
+      }
+      .header-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.625rem 1rem;
+        border-radius: 0;
+        background: #FFFFFF;
+        color: #000000;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 0.875rem;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+        transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        border: 1px solid #FFFFFF;
+        flex-shrink: 0;
+      }
+      .header-cta:hover {
+        background: transparent;
+        color: #FFFFFF;
+        border-color: #FFFFFF;
+      }
+      .header-cta-label { display: none; }
+      @media (min-width: 640px) {
+        .header-cta-label { display: inline; }
+      }
+      .header-mobile-nav {
+        display: flex;
+        gap: 1.5rem;
+        padding: 0.75rem 1rem;
+        overflow-x: auto;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+      }
+      @media (min-width: 768px) {
+        .header-mobile-nav { display: none; }
+      }
+      .header-mobile-link {
+        font-size: 0.875rem;
+        white-space: nowrap;
+        font-family: var(--font-body);
+        color: #FFFFFF;
+        text-decoration: none;
+        transition: opacity 0.2s ease;
+      }
+      .header-mobile-link:hover { opacity: 0.85; }
+      .header-mobile-link-active { font-weight: 700; }
+
+      /* —— Footer: Pitch Black & White · Stealth Monolith —— */
+      .footer-monolith {
+        background: #000000;
+        color: #FFFFFF;
+      }
+      .footer-inner {
+        max-width: 72rem;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 1rem;
+      }
+      @media (min-width: 640px) {
+        .footer-inner { padding-left: 1.5rem; padding-right: 1.5rem; }
+      }
+      .footer-main {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 3rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      }
+      @media (min-width: 768px) {
+        .footer-main {
+          grid-template-columns: auto 1fr auto;
+          gap: 3rem;
+          align-items: start;
+          padding: 4rem 0;
+        }
+      }
+      .footer-brand {
+        display: block;
+        width: fit-content;
+      }
+      .footer-logo {
+        height: 2.25rem;
+        width: auto;
+        object-fit: contain;
+        filter: invert(1);
+        display: block;
+      }
+      .footer-block {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .footer-label {
+        font-family: var(--font-display);
+        font-size: 0.6875rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #FFFFFF;
+        margin-bottom: 0.25rem;
+      }
+      .footer-address {
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        line-height: 1.6;
+        color: #FFFFFF;
+        margin: 0;
+        text-decoration: none;
+        display: inline-block;
+        transition: opacity 0.2s ease;
+      }
+      .footer-address:hover { opacity: 0.85; }
+      .footer-address:focus-visible {
+        outline: 1px solid #FFFFFF;
+        outline-offset: 2px;
+      }
+      .footer-phone {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 0.875rem;
+        color: #FFFFFF;
+        text-decoration: none;
+        margin-top: 0.25rem;
+        transition: opacity 0.2s ease;
+      }
+      .footer-phone:hover { opacity: 0.85; }
+      .footer-phone:focus-visible {
+        outline: 1px solid #FFFFFF;
+        outline-offset: 2px;
+      }
+      .footer-sitemap {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1.5rem;
+        margin-top: 0.25rem;
+      }
+      .footer-sitemap-link {
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        color: #FFFFFF;
+        text-decoration: none;
+        transition: opacity 0.2s ease;
+      }
+      .footer-sitemap-link:hover { opacity: 0.85; }
+      .footer-sitemap-link:focus-visible {
+        outline: 1px solid #FFFFFF;
+        outline-offset: 2px;
+      }
+      .footer-bar {
+        padding: 1.25rem 0;
+        text-align: center;
+        border-top: none;
+      }
+      .footer-copyright {
+        font-family: var(--font-body);
+        font-size: 0.75rem;
+        letter-spacing: 0.02em;
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      /* —— Social proof (elke pagina boven footer) —— */
+      .site-social-proof {
+        width: 100%;
+        padding: 4rem 1.25rem 5rem;
+        background: #FFFFFF;
+        color: #0a0a0a;
+        text-align: center;
+      }
+      @media (min-width: 640px) {
+        .site-social-proof { padding: 5rem 2rem 6rem; }
+      }
+      @media (min-width: 1024px) {
+        .site-social-proof { padding: 6rem 2.5rem 7rem; }
+      }
+      .site-social-proof-inner {
+        max-width: 72rem;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .site-social-proof-stars {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.35rem;
+      }
+      .site-social-proof-star {
+        width: 1.75rem;
+        height: 1.75rem;
+        color: #c9a227;
+      }
+      @media (min-width: 640px) {
+        .site-social-proof-star { width: 2rem; height: 2rem; }
+      }
+      .site-social-proof-rating {
+        font-family: var(--font-display);
+        font-size: 1.125rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        color: #0a0a0a;
+        margin: 0.5rem 0 0 0;
+      }
+      @media (min-width: 640px) {
+        .site-social-proof-rating { font-size: 1.25rem; }
+      }
+      .site-social-proof-text {
+        font-family: var(--font-body);
+        font-size: 0.9375rem;
+        color: #0a0a0a;
+        margin: 0.25rem 0 0 0;
+      }
+      .site-social-proof-link {
+        display: inline-block;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 0.875rem;
+        letter-spacing: 0.04em;
+        color: #0a0a0a;
+        text-decoration: none;
+        margin-top: 0.75rem;
+        transition: opacity 0.2s ease;
+      }
+      .site-social-proof-link:hover { opacity: 0.75; }
+      .site-social-proof-link:focus-visible {
+        outline: 1px solid #0a0a0a;
+        outline-offset: 2px;
+      }
+    </style>
+  </body>
+</html>

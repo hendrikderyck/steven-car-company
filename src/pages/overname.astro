@@ -1,0 +1,245 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Overname – Steven Car Company BV" description="Wilt u uw huidige wagen inruilen? Vul ons inruilformulier in en wij contacteren u zo snel mogelijk met een voorstel.">
+  <div class="overname-page">
+    <section class="overname-section">
+      <div class="overname-container">
+        <div class="overname-layout">
+          <header class="overname-intro">
+            <span class="overname-intro-label">Inruilen</span>
+            <h1 class="overname-title">Overname</h1>
+            <p class="overname-lead">Wilt u uw huidige wagen inruilen?</p>
+            <p class="overname-sub">Vul het formulier in en wij contacteren u zo snel mogelijk met een voorstel.</p>
+          </header>
+
+          <form class="overname-form" action="#" method="post">
+          <fieldset class="overname-fieldset">
+            <legend class="overname-legend">Uw persoonlijke gegevens</legend>
+            <div class="overname-grid">
+              <label class="overname-label" for="overname-naam">Naam</label>
+              <input class="overname-input" type="text" id="overname-naam" name="naam" required />
+
+              <label class="overname-label" for="overname-email">E-mail</label>
+              <input class="overname-input" type="email" id="overname-email" name="email" required />
+
+              <label class="overname-label" for="overname-telefoon">Telefoon</label>
+              <input class="overname-input" type="tel" id="overname-telefoon" name="telefoon" />
+            </div>
+          </fieldset>
+
+          <fieldset class="overname-fieldset">
+            <legend class="overname-legend">Gegevens van uw auto</legend>
+            <div class="overname-grid">
+              <label class="overname-label" for="overname-merk">Merk</label>
+              <input class="overname-input" type="text" id="overname-merk" name="merk" />
+
+              <label class="overname-label" for="overname-model">Model</label>
+              <input class="overname-input" type="text" id="overname-model" name="model" />
+
+              <label class="overname-label" for="overname-bouwjaar">Bouwjaar</label>
+              <input class="overname-input" type="text" id="overname-bouwjaar" name="bouwjaar" placeholder="bijv. 2019" />
+
+              <label class="overname-label" for="overname-km">Kilometerstand</label>
+              <input class="overname-input" type="number" id="overname-km" name="kilometerstand" placeholder="bijv. 85000" min="0" />
+
+              <label class="overname-label" for="overname-pk">PK en/of kW</label>
+              <input class="overname-input" type="text" id="overname-pk" name="pk_kw" placeholder="bijv. 120 PK / 88 kW" />
+
+              <label class="overname-label" for="overname-beschadigingen">Zijn er beschadigingen? Zo ja, welke?</label>
+              <textarea class="overname-input overname-textarea" id="overname-beschadigingen" name="beschadigingen" rows="3"></textarea>
+
+              <label class="overname-label" for="overname-extra">Extra informatie</label>
+              <textarea class="overname-input overname-textarea" id="overname-extra" name="extra" rows="3"></textarea>
+            </div>
+          </fieldset>
+
+          <fieldset class="overname-fieldset">
+            <legend class="overname-legend">Foto's</legend>
+            <div class="overname-grid">
+              <label class="overname-label" for="overname-fotos">Foto's van uw wagen (optioneel)</label>
+              <input class="overname-input overname-file" type="file" id="overname-fotos" name="fotos" accept="image/*" multiple />
+            </div>
+          </fieldset>
+
+          <div class="overname-actions">
+            <button type="submit" class="overname-btn">Verstuur inruilaanvraag</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <style is:global>
+    /* —— Overname: wit · scherpe layout —— */
+    .overname-page {
+      background: #FFFFFF;
+      color: #0a0a0a;
+      min-height: 100%;
+    }
+    .overname-section {
+      padding: 4rem 1.25rem 5rem;
+    }
+    @media (min-width: 640px) {
+      .overname-section { padding: 5rem 2rem 6rem; }
+    }
+    .overname-container {
+      max-width: 72rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .overname-layout {
+      display: grid;
+      gap: 3rem;
+      align-items: start;
+    }
+    @media (min-width: 1024px) {
+      .overname-layout {
+        grid-template-columns: minmax(0, 0.4fr) minmax(0, 0.6fr);
+        gap: 4rem 4rem;
+        align-items: start;
+      }
+    }
+    .overname-intro {
+      max-width: 28rem;
+    }
+    .overname-intro-label {
+      font-family: var(--font-display);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #0a0a0a;
+    }
+    .overname-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #0a0a0a;
+      margin: 0.5rem 0 0 0;
+    }
+    .overname-lead {
+      font-family: var(--font-body);
+      font-size: 1.125rem;
+      line-height: 1.55;
+      color: #0a0a0a;
+      margin: 1rem 0 0 0;
+    }
+    .overname-sub {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      line-height: 1.55;
+      color: rgba(0, 0, 0, 0.7);
+      margin: 0.5rem 0 0 0;
+    }
+    .overname-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+      min-width: 0;
+    }
+    .overname-fieldset {
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 0;
+      padding: 1.5rem 1.25rem;
+      margin: 0;
+    }
+    .overname-legend {
+      font-family: var(--font-display);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #0a0a0a;
+      padding: 0 0.5rem;
+      margin: 0 0 1rem 0;
+    }
+    .overname-grid {
+      display: grid;
+      gap: 1rem;
+    }
+    .overname-label {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #0a0a0a;
+      display: block;
+    }
+    .overname-input {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: #0a0a0a;
+      background: #FFFFFF;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 0;
+      padding: 0.75rem 1rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .overname-input::placeholder {
+      color: rgba(0, 0, 0, 0.45);
+    }
+    .overname-input:focus {
+      outline: 1px solid #0a0a0a;
+      outline-offset: 2px;
+      border-color: #0a0a0a;
+    }
+    .overname-textarea {
+      min-height: 5rem;
+      resize: vertical;
+    }
+    .overname-file {
+      color: #0a0a0a;
+      background: #FFFFFF;
+      border: 1px dashed rgba(0, 0, 0, 0.25);
+      padding: 1rem;
+      border-radius: 0;
+    }
+    .overname-file::file-selector-button {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.875rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid #0a0a0a;
+      border-radius: 0;
+      background: transparent;
+      color: #0a0a0a;
+      margin-right: 1rem;
+      cursor: pointer;
+    }
+    .overname-file::file-selector-button:hover {
+      background: #0a0a0a;
+      color: #FFFFFF;
+    }
+    .overname-actions {
+      margin-top: 0.25rem;
+    }
+    .overname-btn {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.9375rem;
+      letter-spacing: 0.04em;
+      padding: 0.875rem 1.75rem;
+      border-radius: 0;
+      background: #0a0a0a;
+      color: #FFFFFF;
+      border: 1px solid #0a0a0a;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+    .overname-btn:hover {
+      background: transparent;
+      color: #0a0a0a;
+      border-color: #0a0a0a;
+    }
+    .overname-btn:focus-visible {
+      outline: 1px solid #0a0a0a;
+      outline-offset: 2px;
+    }
+  </style>
+</Layout>

@@ -7,9 +7,10 @@ Website voor Steven Car Company BV (Ninove): aan- en verkoop van jonge occasions
 
 ## Technologie
 
-- **Vite** + **React** (TypeScript)
-- **Tailwind CSS** voor styling
-- **React Router** voor navigatie
+- **Astro** (static site, file-based routing)
+- **React** (islands voor Home-animaties en Aanbod-filters)
+- **Tailwind CSS v4** voor styling
+- **Framer Motion** voor animaties
 
 ## Sitemap
 
@@ -42,7 +43,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:5173
+Open http://localhost:4321 (Astro dev server)
 
 ## Build voor productie
 

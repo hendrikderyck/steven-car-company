@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom"
 import type { Car } from "../data/cars"
 
 interface AanbodCardProps {
@@ -31,7 +30,7 @@ export function AanbodCard({ car }: AanbodCardProps) {
 
   return (
     <article className="bg-surface border border-border rounded overflow-hidden hover:border-ink/25 hover:shadow-[0_4px_20px_rgba(0,0,0,0.06)] transition-all duration-200">
-      <Link to={`/aanbod/${car.id}`} className="flex flex-col sm:flex-row sm:min-h-0">
+      <a href={`/aanbod/${car.id}/`} className="flex flex-col sm:flex-row sm:min-h-0">
         {/* Image – AS24 ratio ~250x188 */}
         <div className="relative w-full sm:w-52 shrink-0 aspect-[4/3] sm:aspect-auto sm:h-[188px] bg-border/50 overflow-hidden">
           <img
@@ -68,7 +67,7 @@ export function AanbodCard({ car }: AanbodCardProps) {
             </p>
           </div>
         </div>
-      </Link>
+      </a>
     </article>
   )
 }

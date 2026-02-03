@@ -1,0 +1,226 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { OverOnsPage } from '../components/OverOnsPage';
+---
+
+<Layout title="Over ons – Steven Car Company" description="Steven Car Company is een jong en dynamisch autobedrijf in Ninove, gespecialiseerd in de aan- en verkoop van jonge tweedehandswagens. Selectief aanbod, transparantie en persoonlijke dienstverlening.">
+  <div class="overons-monolith">
+    <OverOnsPage client:load />
+  </div>
+
+  <style is:global>
+    /* —— Over ons: White · Sharp Monolith (improved layout) —— */
+    .overons-monolith {
+      background: #FFFFFF;
+      color: #0a0a0a;
+      min-height: 100%;
+    }
+
+    /* Hero: taller on desktop, content aligned to grid */
+    .overons-hero {
+      position: relative;
+      min-height: 55vh;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    @media (min-width: 1024px) {
+      .overons-hero { min-height: 60vh; }
+    }
+    .overons-hero-inner {
+      position: relative;
+      width: 100%;
+      max-width: 72rem;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 2.5rem 1.25rem 3rem;
+      z-index: 2;
+    }
+    @media (min-width: 640px) {
+      .overons-hero-inner { padding: 3rem 2rem 4rem; }
+    }
+    @media (min-width: 1024px) {
+      .overons-hero-inner { padding: 4rem 2.5rem 5rem; }
+    }
+    .overons-hero-label {
+      font-family: var(--font-display);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.6);
+    }
+    .overons-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #0a0a0a;
+      margin: 0.5rem 0 0 0;
+    }
+    .overons-hero-lead {
+      font-family: var(--font-body);
+      font-size: 1.0625rem;
+      line-height: 1.65;
+      color: #0a0a0a;
+      margin: 1rem 0 0 0;
+      max-width: 28rem;
+    }
+    @media (min-width: 640px) {
+      .overons-hero-lead { font-size: 1.125rem; margin-top: 1.25rem; }
+    }
+    .overons-hero-img-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .overons-hero-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .overons-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, #FFFFFF 0%, rgba(255, 255, 255, 0.88) 35%, rgba(255, 255, 255, 0.45) 100%);
+      z-index: 1;
+    }
+
+    /* Content: vier blokken onder elkaar, geen grid, geen foto's */
+    .overons-section {
+      padding: 3.5rem 1.25rem;
+    }
+    @media (min-width: 640px) {
+      .overons-section { padding: 4.5rem 2rem; }
+    }
+    @media (min-width: 1024px) {
+      .overons-section { padding: 5.5rem 2.5rem; }
+    }
+    .overons-container {
+      max-width: 72rem;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 0.5rem;
+    }
+    @media (min-width: 640px) {
+      .overons-container { padding: 0 1rem; }
+    }
+
+    .overons-blocks {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+    @media (min-width: 640px) {
+      .overons-blocks { padding-top: 5rem; padding-bottom: 5rem; }
+    }
+    @media (min-width: 1024px) {
+      .overons-blocks { padding-top: 6rem; padding-bottom: 6rem; }
+    }
+    .overons-blocks-inner {
+      max-width: 38rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .overons-block {
+      padding-top: 2.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+    .overons-block:first-child {
+      padding-top: 0;
+    }
+    .overons-block:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    @media (min-width: 640px) {
+      .overons-block {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+      }
+    }
+
+    .overons-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      color: #0a0a0a;
+      flex-shrink: 0;
+    }
+    .overons-icon svg { width: 1.35rem; height: 1.35rem; }
+    .overons-block .overons-icon {
+      margin-bottom: 0.25rem;
+    }
+    .overons-block .overons-label {
+      margin-top: 0;
+    }
+    .overons-label {
+      font-family: var(--font-display);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #0a0a0a;
+      margin-top: 1.25rem;
+    }
+    .overons-text {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #0a0a0a;
+      margin: 0.75rem 0 0 0;
+    }
+    @media (min-width: 640px) {
+      .overons-text { font-size: 1.0625rem; margin-top: 1rem; }
+    }
+
+    /* CTA */
+    .overons-cta-section {
+      padding: 4.5rem 1.25rem 5.5rem;
+      border-bottom: none;
+      text-align: center;
+    }
+    @media (min-width: 640px) {
+      .overons-cta-section { padding: 5.5rem 2rem 6.5rem; }
+    }
+    .overons-cta-section .overons-container { max-width: 32rem; }
+    .overons-cta-text {
+      font-family: var(--font-body);
+      font-size: 1.0625rem;
+      line-height: 1.65;
+      color: #0a0a0a;
+      margin: 0;
+    }
+    .overons-cta-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+      padding: 0.875rem 1.5rem;
+      border-radius: 0;
+      background: #0a0a0a;
+      color: #FFFFFF;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      border: 1px solid #0a0a0a;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .overons-cta-link:hover {
+      background: transparent;
+      color: #0a0a0a;
+      border-color: #0a0a0a;
+    }
+    .overons-cta-link:focus-visible {
+      outline: 1px solid #0a0a0a;
+      outline-offset: 2px;
+    }
+    .overons-cta-link svg { width: 1.25rem; height: 1.25rem; flex-shrink: 0; }
+  </style>
+</Layout>

@@ -1,0 +1,327 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { HomeHero } from '../components/HomeHero';
+---
+
+<Layout title="Steven Car Company BV – Jonge Occasions Ninove" headerDark>
+  <HomeHero client:load />
+
+  <style is:global>
+    /* —— Home Hero: Pitch Black & White · Sharp Monolith —— */
+    .home-hero-monolith {
+      position: relative;
+      min-height: calc(100vh - 7rem); /* 100vh minus header (mobile: 4rem + nav row) */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000000;
+      color: #FFFFFF;
+      overflow: hidden;
+    }
+    @media (min-width: 768px) {
+      .home-hero-monolith { min-height: calc(100vh - 4rem); } /* desktop: header 4rem only */
+    }
+    .home-hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .home-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.7) 100%);
+    }
+    .home-hero-inner {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 72rem;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 3rem 1.25rem 4rem;
+      text-align: center;
+    }
+    @media (min-width: 640px) {
+      .home-hero-inner { padding: 4rem 2rem 5rem; }
+    }
+    @media (min-width: 1024px) {
+      .home-hero-inner { padding: 5rem 2.5rem 6rem; }
+    }
+    .home-hero-logo-wrap {
+      margin: 0;
+      line-height: 0;
+      height: clamp(3rem, 10vw, 4.25rem);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    @media (min-width: 640px) {
+      .home-hero-logo-wrap { height: clamp(3.5rem, 12vw, 4.75rem); }
+    }
+    .home-hero-logo {
+      width: auto;
+      height: 300%;
+      object-fit: contain;
+      object-position: center;
+      filter: invert(1);
+      display: block;
+    }
+    .home-hero-actions {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+    }
+    .home-hero-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.9375rem;
+      letter-spacing: 0.04em;
+      padding: 0.875rem 1.75rem;
+      border-radius: 0;
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+    .home-hero-cta + .home-hero-cta { margin-left: -1px; }
+    .home-hero-cta:focus-visible {
+      outline: 1px solid #FFFFFF;
+      outline-offset: 2px;
+    }
+    .home-hero-cta-solid {
+      background: #FFFFFF;
+      color: #000000;
+      border: 1px solid #FFFFFF;
+    }
+    .home-hero-cta-solid:hover {
+      background: transparent;
+      color: #FFFFFF;
+      border-color: #FFFFFF;
+    }
+    .home-hero-cta-ghost {
+      background: transparent;
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+    .home-hero-cta-ghost:hover {
+      border-color: #FFFFFF;
+      color: #FFFFFF;
+    }
+
+    /* —— Home: Over ons + Foto bedrijf (Pitch Black & White · Sharp) —— */
+    .home-about {
+      background: #FFFFFF;
+      color: #0a0a0a;
+      padding: 4rem 1.25rem;
+    }
+    @media (min-width: 640px) {
+      .home-about { padding: 5rem 2rem; }
+    }
+    @media (min-width: 1024px) {
+      .home-about { padding: 6rem 2.5rem; }
+    }
+    .home-about-inner {
+      max-width: 72rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .home-about-grid {
+      display: grid;
+      gap: 2.5rem;
+      align-items: start;
+    }
+    @media (min-width: 1024px) {
+      .home-about-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(280px, 1fr);
+        gap: 4rem 3rem;
+      }
+    }
+    .home-about-label {
+      font-family: var(--font-display);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #0a0a0a;
+    }
+    .home-about-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #0a0a0a;
+      margin: 0.5rem 0 0 0;
+    }
+    .home-about-lead {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.65;
+      color: #0a0a0a;
+      margin: 1rem 0 0 0;
+      max-width: 32rem;
+    }
+    .home-about-link {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.875rem;
+      letter-spacing: 0.04em;
+      color: #0a0a0a;
+      text-decoration: none;
+      margin-top: 1.5rem;
+      transition: opacity 0.2s ease;
+    }
+    .home-about-link:hover { opacity: 0.75; }
+    .home-about-link:focus-visible {
+      outline: 1px solid #0a0a0a;
+      outline-offset: 2px;
+    }
+    .home-about-img-wrap {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border-radius: 0;
+    }
+    .home-about-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* —— Home: Diensten (Pitch Black & White · Sharp) —— */
+    .home-diensten {
+      background: #f5f5f5;
+      color: #0a0a0a;
+      padding: 4rem 1.25rem;
+    }
+    @media (min-width: 640px) {
+      .home-diensten { padding: 5rem 2rem; }
+    }
+    @media (min-width: 1024px) {
+      .home-diensten { padding: 6rem 2.5rem; }
+    }
+    .home-diensten-inner {
+      max-width: 72rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .home-diensten-label {
+      font-family: var(--font-display);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #0a0a0a;
+    }
+    .home-diensten-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #0a0a0a;
+      margin: 0.5rem 0 0 0;
+    }
+    .home-diensten-lead {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.65;
+      color: #0a0a0a;
+      margin: 1rem 0 0 0;
+      max-width: 32rem;
+    }
+    .home-diensten-lead {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #0a0a0a;
+      margin: 1rem 0 0 0;
+      max-width: 36rem;
+    }
+    .home-diensten-grid {
+      display: grid;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    @media (min-width: 640px) {
+      .home-diensten-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+    }
+    .home-diensten-card {
+      background: #FFFFFF;
+      padding: 2rem 1.5rem 2rem;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+    @media (min-width: 640px) {
+      .home-diensten-card { padding: 2.25rem 2rem 2.25rem; }
+    }
+    .home-diensten-card-title {
+      font-family: var(--font-display);
+      font-size: 1.0625rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #0a0a0a;
+      margin: 0 0 0.5rem 0;
+    }
+    .home-diensten-card-text {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: #0a0a0a;
+      margin: 0;
+      flex: 1;
+    }
+    .home-diensten-card-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.875rem;
+      letter-spacing: 0.04em;
+      padding: 0.875rem 1.5rem;
+      margin-top: 1.5rem;
+      text-decoration: none;
+      border-radius: 0;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+    .home-diensten-card-btn:focus-visible {
+      outline: 1px solid #0a0a0a;
+      outline-offset: 2px;
+    }
+    .home-diensten-card-btn {
+      background: #0a0a0a;
+      color: #FFFFFF;
+      border: 1px solid #0a0a0a;
+    }
+    .home-diensten-card-btn:hover {
+      background: transparent;
+      color: #0a0a0a;
+    }
+    .home-diensten-card-btn-ghost {
+      background: transparent;
+      color: #0a0a0a;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+    }
+    .home-diensten-card-btn-ghost:hover {
+      border-color: #0a0a0a;
+      color: #0a0a0a;
+    }
+  </style>
+</Layout>

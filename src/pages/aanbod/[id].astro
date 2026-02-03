@@ -1,0 +1,63 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { mockCars } from '../../data/cars';
+
+export function getStaticPaths() {
+  return mockCars.map((car) => ({
+    params: { id: car.id },
+    props: { car },
+  }));
+}
+
+const { car } = Astro.props;
+const formattedPrice = new Intl.NumberFormat("nl-BE", {
+  style: "currency",
+  currency: "EUR",
+  maximumFractionDigits: 0,
+}).format(car.price);
+---
+
+<Layout title={`${car.title} – Steven Car Company BV`} description={`${car.title} – ${car.km.toLocaleString("nl-BE")} km · ${car.year} · ${formattedPrice}`}>
+  <section class="bg-bg py-8 border-b border-border">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <a href="/aanbod/" class="font-body text-sm text-muted hover:text-ink transition">← Terug naar aanbod</a>
+    </div>
+  </section>
+  <section class="py-12 sm:py-16 bg-surface">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16">
+        <div class="aspect-[4/3] bg-border/30 rounded-sm overflow-hidden">
+          <img src={car.imageUrl} alt={car.title} class="w-full h-full object-cover" />
+        </div>
+        <div>
+          <h1 class="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-ink tracking-tight">{car.title}</h1>
+          <p class="font-body text-muted mt-2">
+            {car.km.toLocaleString("nl-BE")} km · {car.year} · {car.power} · {car.transmission} · {car.fuel}
+          </p>
+          <div class="mt-8">
+            <span class="font-display text-2xl font-bold text-ink tracking-tight">{formattedPrice}</span>
+            {car.btwAftrekbaar && <span class="font-body ml-2 text-sm text-muted">incl. BTW (BTW aftrekbaar)</span>}
+          </div>
+          {car.priceExclBtw && (
+            <p class="font-body text-sm text-muted mt-1">
+              {new Intl.NumberFormat("nl-BE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(car.priceExclBtw)} excl. BTW
+            </p>
+          )}
+          {car.features.length > 0 && (
+            <div class="mt-8">
+              <h3 class="font-display font-semibold text-ink text-sm tracking-tight mb-2">Uitrusting</h3>
+              <p class="font-body text-muted text-sm leading-relaxed">{car.features.join(" · ")}</p>
+            </div>
+          )}
+          <p class="font-body text-sm text-muted mt-8 leading-relaxed">Overname mogelijk. Geen testritten – wel graag een afspraak om de wagen te bekijken.</p>
+          <a
+            href="tel:0487450331"
+            class="mt-8 inline-flex items-center font-display font-semibold bg-ink text-white px-6 py-3.5 rounded-sm tracking-tight hover:bg-ink-soft transition"
+          >
+            Bel voor afspraak · 0487 45 03 31
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
