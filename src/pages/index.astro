@@ -323,5 +323,117 @@ import { HomeHero } from '../components/HomeHero';
       border-color: #0a0a0a;
       color: #0a0a0a;
     }
+
+    /* —— Home: Uitgelichte wagens — eigen blok, valt meer op (licht) —— */
+    .home-highlight-section {
+      margin-top: 4rem;
+      padding-top: 3rem;
+      padding-bottom: 1rem;
+      border-top: 1px solid #e5e5e5;
+    }
+    @media (min-width: 640px) {
+      .home-highlight-section { margin-top: 5rem; padding-top: 3.5rem; }
+    }
+    .home-highlight-inner {
+      max-width: 72rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .home-highlight-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #0a0a0a;
+      margin: 0 0 2rem 0;
+    }
+    @media (min-width: 640px) {
+      .home-highlight-title { font-size: 1.5rem; }
+    }
+    .home-highlight-grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 640px) {
+      .home-highlight-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.75rem;
+      }
+    }
+    .home-highlight-card {
+      display: block;
+      background: #FFFFFF;
+      border: 1px solid #e5e5e5;
+      text-decoration: none;
+      color: #0a0a0a;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    }
+    .home-highlight-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1);
+      border-color: #0a0a0a;
+    }
+    .home-highlight-card:focus-visible {
+      outline: 1px solid #0a0a0a;
+      outline-offset: 2px;
+    }
+    .home-highlight-img-wrap {
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: #f0f0f0;
+    }
+    .home-highlight-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .home-highlight-card:hover .home-highlight-img {
+      transform: scale(1.05);
+    }
+    .home-highlight-body {
+      padding: 1.25rem 1.25rem 1.5rem;
+    }
+    .home-highlight-card-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #0a0a0a;
+      margin: 0 0 0.35rem 0;
+    }
+    .home-highlight-specs {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      line-height: 1.4;
+      color: #0a0a0a;
+      margin: 0;
+      opacity: 0.85;
+    }
+    .home-highlight-price {
+      font-family: var(--font-display);
+      font-size: 1.0625rem;
+      font-weight: 700;
+      color: #0a0a0a;
+      margin: 0.5rem 0 0 0;
+    }
+    .home-highlight-link {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.9375rem;
+      letter-spacing: 0.04em;
+      color: #0a0a0a;
+      text-decoration: none;
+      margin-top: 2rem;
+      transition: opacity 0.2s ease;
+    }
+    .home-highlight-link:hover { opacity: 0.75; }
+    .home-highlight-link:focus-visible {
+      outline: 1px solid #0a0a0a;
+      outline-offset: 2px;
+    }
   </style>
 </Layout>

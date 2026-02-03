@@ -1,3 +1,16 @@
+import { mockCars } from "../data/cars";
+
+const HIGHLIGHT_COUNT = 3;
+const highlightedCars = mockCars.slice(0, HIGHLIGHT_COUNT);
+
+function formatPrice(price: number) {
+  return new Intl.NumberFormat("nl-BE", {
+    style: "currency",
+    currency: "EUR",
+    maximumFractionDigits: 0,
+  }).format(price);
+}
+
 export function HomeHero() {
   return (
     <>
@@ -81,6 +94,32 @@ export function HomeHero() {
               </a>
             </div>
           </div>
+
+          {/* Uitgelichte wagens uit aanbod — eigen blok zodat het meer opvalt */}
+          <section className="home-highlight-section" aria-labelledby="home-highlight-heading">
+            <div className="home-highlight-inner">
+              <h2 id="home-highlight-heading" className="home-highlight-title">Uit ons aanbod</h2>
+              <div className="home-highlight-grid">
+                {highlightedCars.map((car) => (
+                  <a key={car.id} href={`/aanbod/${car.id}/`} className="home-highlight-card">
+                    <div className="home-highlight-img-wrap">
+                      <img src={car.imageUrl} alt={car.title} className="home-highlight-img" />
+                    </div>
+                    <div className="home-highlight-body">
+                      <h3 className="home-highlight-card-title">{car.title}</h3>
+                      <p className="home-highlight-specs">
+                        {car.km.toLocaleString("nl-BE")} km · {car.year} · {car.power}
+                      </p>
+                      <p className="home-highlight-price">{formatPrice(car.price)}</p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+              <a href="/aanbod/" className="home-highlight-link">
+                Bekijk volledig aanbod →
+              </a>
+            </div>
+          </section>
         </div>
       </section>
     </>
