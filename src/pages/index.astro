@@ -28,15 +28,6 @@ import { HomeHero } from '../components/HomeHero';
       height: 100%;
       object-fit: cover;
     }
-    /* Hide native play button when autoplay is blocked (e.g. iPhone Low Power Mode) */
-    .home-hero-bg::-webkit-media-controls-start-playback-button {
-      display: none !important;
-      opacity: 0;
-      pointer-events: none;
-    }
-    .home-hero-bg::-webkit-media-controls-panel {
-      display: none !important;
-    }
     .home-hero-overlay {
       position: absolute;
       inset: 0;
@@ -157,11 +148,11 @@ import { HomeHero } from '../components/HomeHero';
     .home-about-grid {
       display: grid;
       gap: 2.5rem;
-      align-items: start;
+      align-items: center;
     }
     @media (min-width: 1024px) {
       .home-about-grid {
-        grid-template-columns: minmax(0, 1fr) minmax(280px, 1fr);
+        grid-template-columns: 1fr 1fr;
         gap: 4rem 3rem;
       }
     }
@@ -209,7 +200,7 @@ import { HomeHero } from '../components/HomeHero';
     }
     .home-about-img-wrap {
       position: relative;
-      aspect-ratio: 4 / 3;
+      aspect-ratio: 16 / 10;
       overflow: hidden;
       border-radius: 0;
     }
@@ -217,6 +208,7 @@ import { HomeHero } from '../components/HomeHero';
       width: 100%;
       height: 100%;
       object-fit: cover;
+      filter: brightness(0.8);
     }
 
     /* —— Home: Diensten (Pitch Black & White · Sharp) —— */
@@ -235,6 +227,56 @@ import { HomeHero } from '../components/HomeHero';
       max-width: 72rem;
       margin-left: auto;
       margin-right: auto;
+    }
+    .home-diensten-header {
+      margin-bottom: 2rem;
+      text-align: right;
+    }
+    @media (min-width: 1024px) {
+      .home-diensten-header { margin-bottom: 2.5rem; }
+    }
+    .home-diensten-layout {
+      display: grid;
+      gap: 2rem;
+      align-items: center;
+    }
+    @media (min-width: 1024px) {
+      .home-diensten-layout {
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+      }
+    }
+    .home-diensten-img-wrap {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      order: 2;
+    }
+    @media (min-width: 1024px) {
+      .home-diensten-img-wrap {
+        order: 0;
+      }
+    }
+    .home-diensten-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      filter: brightness(0.8);
+    }
+    .home-diensten-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      order: 1;
+    }
+    @media (min-width: 1024px) {
+      .home-diensten-cards {
+        order: 0;
+      }
     }
     .home-diensten-label {
       font-family: var(--font-display);
@@ -269,18 +311,6 @@ import { HomeHero } from '../components/HomeHero';
       color: #0a0a0a;
       margin: 1rem 0 0 0;
       max-width: 36rem;
-    }
-    .home-diensten-grid {
-      display: grid;
-      gap: 1.5rem;
-      margin-top: 2.5rem;
-    }
-    @media (min-width: 640px) {
-      .home-diensten-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2rem;
-        margin-top: 3rem;
-      }
     }
     .home-diensten-card {
       background: #FFFFFF;

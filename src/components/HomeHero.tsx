@@ -16,12 +16,9 @@ export function HomeHero() {
     <>
       {/* Hero + CTA — Pitch Black & White · Sharp */}
       <section className="home-hero-monolith">
-        <video
-          src={`/hero.mp4${import.meta.env.DEV ? `?t=${Date.now()}` : ""}`}
-          autoPlay
-          muted
-          loop
-          playsInline
+        <img
+          src="/hero.jpeg"
+          alt=""
           className="home-hero-bg"
           aria-hidden
         />
@@ -61,7 +58,7 @@ export function HomeHero() {
               </a>
             </div>
             <div className="home-about-img-wrap">
-              <img src="/banner.png" alt="Steven Car Company, Ninove" />
+              <img src="/home_page_over_ons.jpeg" alt="Steven Car Company, Ninove" />
             </div>
           </div>
         </div>
@@ -74,24 +71,29 @@ export function HomeHero() {
             <span className="home-diensten-label">Diensten</span>
             <h2 className="home-diensten-title">Waarvoor kan u bij ons terecht?</h2>
           </div>
-          <div className="home-diensten-grid">
-            <div className="home-diensten-card">
-              <h3 className="home-diensten-card-title">Koop uw tweedehandswagen</h3>
-              <p className="home-diensten-card-text">
-                Jonge occasions, eerlijke prijzen en persoonlijk advies op maat.
-              </p>
-              <a href="/aanbod/" className="home-diensten-card-btn">
-                Bekijk ons aanbod
-              </a>
+          <div className="home-diensten-layout">
+            <div className="home-diensten-img-wrap">
+              <img src="/home_page_diensten.jpeg" alt="Steven Car Company, ons aanbod" />
             </div>
-            <div className="home-diensten-card">
-              <h3 className="home-diensten-card-title">Verkoop uw wagen</h3>
-              <p className="home-diensten-card-text">
-                Wagen verkopen? Wij kopen graag in en bieden een eerlijke overname.
-              </p>
-              <a href="/overname/" className="home-diensten-card-btn home-diensten-card-btn-ghost">
-                Maak een afspraak
-              </a>
+            <div className="home-diensten-cards">
+              <div className="home-diensten-card">
+                <h3 className="home-diensten-card-title">Koop uw tweedehandswagen</h3>
+                <p className="home-diensten-card-text">
+                  Jonge occasions, eerlijke prijzen en persoonlijk advies op maat.
+                </p>
+                <a href="/aanbod/" className="home-diensten-card-btn">
+                  Bekijk ons aanbod
+                </a>
+              </div>
+              <div className="home-diensten-card">
+                <h3 className="home-diensten-card-title">Verkoop uw wagen</h3>
+                <p className="home-diensten-card-text">
+                  Wagen verkopen? Wij kopen graag in en bieden een eerlijke overname.
+                </p>
+                <a href="/overname/" className="home-diensten-card-btn home-diensten-card-btn-ghost">
+                  Maak een afspraak
+                </a>
+              </div>
             </div>
           </div>
 
