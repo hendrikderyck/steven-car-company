@@ -56,7 +56,7 @@ export function HomeHero({ highlightedCars: propCars = [] }: HomeHeroProps) {
     fetchListings();
   }, [propCars.length]);
 
-  const heroVideoRef = useRef<HTMLImageElement>(null);
+  const heroVideoRef = useRef<HTMLVideoElement>(null);
   const heroOverlayRef = useRef<HTMLDivElement>(null);
   const heroInnerRef = useRef<HTMLDivElement>(null);
   const heroLogoWrapRef = useRef<HTMLHeadingElement>(null);
@@ -213,10 +213,13 @@ export function HomeHero({ highlightedCars: propCars = [] }: HomeHeroProps) {
     <>
       {/* Hero + CTA — Pitch Black & White · Sharp */}
       <section className="home-hero-monolith">
-        <img
+        <video
           ref={heroVideoRef}
-          src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&h=1080&fit=crop"
-          alt=""
+          src="/hero.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
           className="home-hero-bg"
           aria-hidden
         />
