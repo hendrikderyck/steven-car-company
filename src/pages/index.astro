@@ -3,16 +3,13 @@ import Layout from '../layouts/Layout.astro';
 import { HomeHero } from '../components/HomeHero';
 import type { Car } from '../data/cars';
 import { transformApiListingsToCars } from '../utils/api-listing-to-car';
+import { fetchListings } from '../utils/fetch-listings';
 
 let highlightedCars: Car[] = [];
 try {
-  const baseUrl = Astro.url.origin;
-  const response = await fetch(`${baseUrl}/api/listings.json`);
-  if (response.ok) {
-    const data = await response.json();
-    const all = transformApiListingsToCars(data.listings ?? []);
-    highlightedCars = all.slice(0, 3);
-  }
+  const result = await fetchListings();
+  const all = transformApiListingsToCars(result.listings ?? []);
+  highlightedCars = all.slice(0, 3);
 } catch {
   // Keep empty; HomeHero will show no cars if API fails
 }
