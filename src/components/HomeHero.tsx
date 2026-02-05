@@ -197,7 +197,7 @@ export function HomeHero({ highlightedCars: propCars = [] }: HomeHeroProps) {
         <div ref={heroInnerRef} className="home-hero-inner">
           <h1 ref={heroLogoWrapRef} className="home-hero-logo-wrap">
             <img
-              src="/logo.png"
+              src="/logo.webp"
               alt="Steven Car Company"
               className="home-hero-logo"
             />
@@ -270,7 +270,7 @@ export function HomeHero({ highlightedCars: propCars = [] }: HomeHeroProps) {
               </a>
             </div>
             <div ref={aboutImgRef} className="home-about-img-wrap">
-              <img src="/home_page_over_ons.jpeg" alt="Steven Car Company, Ninove" />
+              <img src="/home_page_over_ons.webp" alt="Steven Car Company, Ninove" />
             </div>
           </div>
         </div>
@@ -285,7 +285,7 @@ export function HomeHero({ highlightedCars: propCars = [] }: HomeHeroProps) {
           </div>
           <div className="home-diensten-layout">
             <div ref={dienstenImgRef} className="home-diensten-img-wrap">
-              <img src="/home_page_diensten.jpeg" alt="Steven Car Company, ons aanbod" />
+              <img src="/home_page_diensten.webp" alt="Steven Car Company, ons aanbod" />
             </div>
             <div className="home-diensten-cards">
               <div ref={(el) => { dienstenCardsRef.current[0] = el; }} className="home-diensten-card">
