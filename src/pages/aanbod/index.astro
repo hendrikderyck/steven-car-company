@@ -2,26 +2,36 @@
 import Layout from '../../layouts/Layout.astro';
 import { AanbodPage } from '../../components/AanbodPage';
 import type { Car } from '../../data/cars';
-import { mockCars } from '../../data/cars';
 import { transformApiListingsToCars } from '../../utils/api-listing-to-car';
+
+// This page will be server-rendered at runtime, not pre-rendered during build
+export const prerender = false;
 
 let cars: Car[] = [];
 
 try {
   const baseUrl = Astro.url.origin;
   const apiUrl = `${baseUrl}/api/listings.json`;
+  console.log(`[AanbodPage] Fetching from: ${apiUrl}`);
+  
   const response = await fetch(apiUrl);
 
   if (response.ok) {
     const data = await response.json();
+    console.log(`[AanbodPage] Received ${data.listings?.length || 0} listings`);
     cars = transformApiListingsToCars(data.listings);
+    console.log(`[AanbodPage] Transformed to ${cars.length} cars`);
+  } else {
+    console.error(`[AanbodPage] API returned status ${response.status}: ${response.statusText}`);
   }
-  if (cars.length === 0) {
-    cars = mockCars;
-  }
-} catch (error) {
-  console.error('Error fetching cars from API:', error);
-  cars = mockCars;
+} catch (error: any) {
+  console.error('[AanbodPage] Error fetching cars from API:', error);
+  console.error('[AanbodPage] Error details:', {
+    name: error.name,
+    message: error.message,
+    cause: error.cause,
+    stack: error.stack,
+  });
 }
 ---
 

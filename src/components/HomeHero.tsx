@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { Car } from "../data/cars";
-import { mockCars } from "../data/cars";
 import { isRealListingId } from "../utils/listings";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -10,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 const HIGHLIGHT_COUNT = 3;
 
 interface HomeHeroProps {
-  /** First N listings from aanbod; when empty, falls back to mock data */
+  /** First N listings from aanbod */
   highlightedCars?: Car[];
 }
 
@@ -23,8 +22,7 @@ function formatPrice(price: number) {
 }
 
 export function HomeHero({ highlightedCars: propCars = [] }: HomeHeroProps) {
-  const highlightedCars =
-    propCars.length > 0 ? propCars.slice(0, HIGHLIGHT_COUNT) : mockCars.slice(0, HIGHLIGHT_COUNT);
+  const highlightedCars = propCars.slice(0, HIGHLIGHT_COUNT);
 
   const heroVideoRef = useRef<HTMLVideoElement>(null);
   const heroOverlayRef = useRef<HTMLDivElement>(null);
