@@ -11,15 +11,15 @@ const mapsEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed
   <div class="contact-page">
     <section class="contact-section">
       <div class="contact-container">
-        <div class="contact-grid">
-          <div class="contact-col contact-col-card">
+        <div class="contact-grid" id="contact-grid">
+          <div class="contact-col contact-col-card" id="contact-col-card">
             <div class="contact-card">
-              <h1 class="contact-title">
+              <h1 class="contact-title" id="contact-title">
                 Contact
               </h1>
 
               <dl class="contact-dl">
-                <div class="contact-dl-item">
+                <div class="contact-dl-item" data-contact-item>
                   <dt class="contact-dt">Adres</dt>
                   <dd class="contact-dd">
                     Steven Car Company BV<br />
@@ -27,7 +27,7 @@ const mapsEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed
                     9400 Ninove
                   </dd>
                 </div>
-                <div class="contact-dl-item">
+                <div class="contact-dl-item" data-contact-item>
                   <dt class="contact-dt">Openingsuren</dt>
                   <dd class="contact-dd">
                     <table class="contact-table">
@@ -50,8 +50,8 @@ const mapsEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed
                 </div>
               </dl>
 
-              <div class="contact-actions">
-                <a href="tel:0487450331" class="contact-btn contact-btn-solid">
+              <div class="contact-actions" id="contact-actions">
+                <a href="tel:0487450331" class="contact-btn contact-btn-solid" data-contact-btn>
                   <svg class="contact-btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
@@ -62,6 +62,7 @@ const mapsEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed
                   target="_blank"
                   rel="noopener noreferrer"
                   class="contact-btn contact-btn-ghost"
+                  data-contact-btn
                 >
                   <svg class="contact-btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
@@ -70,7 +71,7 @@ const mapsEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed
                 </a>
               </div>
 
-              <p class="contact-divider-t">
+              <p class="contact-divider-t" id="contact-fb">
                 <a
                   href="https://www.facebook.com/stevencarcompany"
                   target="_blank"
@@ -83,7 +84,7 @@ const mapsEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed
             </div>
           </div>
 
-          <div class="contact-col contact-col-map">
+          <div class="contact-col contact-col-map" id="contact-col-map">
             <div class="contact-map-wrap">
               <iframe
                 title="Steven Car Company op Google Maps"
@@ -109,15 +110,6 @@ const mapsEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed
       min-height: 100%;
       background: #FFFFFF;
       color: #0a0a0a;
-    }
-
-    @keyframes contact-fade-in-up {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes contact-fade-in {
-      from { opacity: 0; }
-      to { opacity: 1; }
     }
 
     .contact-section {
@@ -152,12 +144,6 @@ const mapsEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed
     @media (min-width: 1024px) {
       .contact-grid { grid-template-columns: 1fr 1fr; }
     }
-
-    .contact-col {
-      animation: contact-fade-in-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-    .contact-col-card { animation-delay: 0.05s; }
-    .contact-col-map { animation-delay: 0.1s; }
 
     .contact-card {
       padding: 2rem;
@@ -199,12 +185,9 @@ const mapsEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed
       gap: 0;
     }
     .contact-dl-item {
-      animation: contact-fade-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
       border-bottom: 1px solid rgba(0, 0, 0, 0.12);
     }
     .contact-dl-item:last-of-type { border-bottom: none; }
-    .contact-dl-item:nth-child(1) { animation-delay: 0.15s; }
-    .contact-dl-item:nth-child(2) { animation-delay: 0.2s; }
 
     .contact-dt {
       font-family: var(--font-display);
@@ -349,6 +332,8 @@ const mapsEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed
       overflow: hidden;
       background: #f5f5f5;
       border: 1px solid rgba(0, 0, 0, 0.12);
+      position: relative;
+      transform-origin: center center;
     }
     @media (min-width: 640px) {
       .contact-map-wrap { min-height: 400px; }
@@ -361,6 +346,8 @@ const mapsEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed
       height: 100%;
       min-height: 320px;
       border: 0;
+      display: block;
+      position: relative;
     }
     @media (min-width: 640px) {
       .contact-map-iframe { min-height: 400px; }
@@ -369,4 +356,136 @@ const mapsEmbedUrl = `https://www.google.com/maps?q=${addressQuery}&output=embed
       .contact-map-iframe { min-height: 420px; }
     }
   </style>
+
+  <script>
+    import gsap from 'gsap';
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    function initContactAnimations() {
+      const ease = 'power3.out';
+      const card = document.getElementById('contact-col-card');
+      const map = document.getElementById('contact-col-map');
+      const mapWrap = document.querySelector('.contact-map-wrap');
+      const title = document.getElementById('contact-title');
+      const items = document.querySelectorAll('[data-contact-item]');
+      const tableRows = document.querySelectorAll('.contact-table-row');
+      const actions = document.getElementById('contact-actions');
+      const btns = document.querySelectorAll('[data-contact-btn]');
+      const btnIcons = document.querySelectorAll('.contact-btn-icon');
+      const fb = document.getElementById('contact-fb');
+      const fbLink = document.querySelector('.contact-fb-link');
+
+      if (!card || !map) return;
+
+      // —— Initial states ——
+      gsap.set([card, map], { opacity: 0, y: 32, scale: 0.98 });
+      if (mapWrap) {
+        gsap.set(mapWrap, { scale: 1.05, opacity: 0, transformOrigin: 'center center' });
+      }
+      gsap.set(title, { opacity: 0, y: 20, rotationX: -8 });
+      gsap.set(items, { opacity: 0, x: -20, scale: 0.96 });
+      gsap.set(tableRows, { opacity: 0, x: -12 });
+      gsap.set(actions, { opacity: 0, y: 16, scale: 0.98 });
+      gsap.set(btns, { opacity: 0, y: 12, scale: 0.95 });
+      gsap.set(btnIcons, { scale: 0, rotation: -180 });
+      if (fb) gsap.set(fb, { opacity: 0, y: 8 });
+      if (fbLink) gsap.set(fbLink, { opacity: 0, x: -8 });
+
+      // —— Main timeline ——
+      const tl = gsap.timeline({ defaults: { ease } });
+      tl
+        .to(card, { opacity: 1, y: 0, scale: 1, duration: 0.7 })
+        .to(map, { opacity: 1, y: 0, scale: 1, duration: 0.7 }, '-=0.5')
+        .to(mapWrap, { scale: 1, opacity: 1, duration: 0.8, transformOrigin: 'center center' }, '-=0.6')
+        .to(title, { opacity: 1, y: 0, rotationX: 0, duration: 0.6 }, '-=0.6')
+        .to(items, { opacity: 1, x: 0, scale: 1, duration: 0.5, stagger: 0.1 }, '-=0.4')
+        .to(tableRows, { opacity: 1, x: 0, duration: 0.4, stagger: 0.06 }, '-=0.3')
+        .to(actions, { opacity: 1, y: 0, scale: 1, duration: 0.45 }, '-=0.2')
+        .to(btns, { opacity: 1, y: 0, scale: 1, duration: 0.4, stagger: 0.08 }, '-=0.35')
+        .to(btnIcons, { scale: 1, rotation: 0, duration: 0.4, stagger: 0.08, ease: 'back.out(1.7)' }, '-=0.4');
+      if (fb) tl.to(fb, { opacity: 1, y: 0, duration: 0.35 }, '-=0.2');
+      if (fbLink) tl.to(fbLink, { opacity: 1, x: 0, duration: 0.4 }, '-=0.15');
+
+      // —— Button hover animations ——
+      btns.forEach((btn) => {
+        const icon = btn.querySelector('.contact-btn-icon');
+        const hoverTl = gsap.timeline({ paused: true });
+        hoverTl
+          .to(btn, { scale: 1.02, y: -2, duration: 0.2, ease: 'power2.out' })
+          .to(icon, { rotation: 8, x: 2, duration: 0.2 }, 0);
+        
+        btn.addEventListener('mouseenter', () => hoverTl.play());
+        btn.addEventListener('mouseleave', () => hoverTl.reverse());
+      });
+
+      // —— Facebook link hover ——
+      if (fbLink) {
+        const fbHoverTl = gsap.timeline({ paused: true });
+        fbHoverTl.to(fbLink, { x: 4, duration: 0.2, ease: 'power2.out' });
+        fbLink.addEventListener('mouseenter', () => fbHoverTl.play());
+        fbLink.addEventListener('mouseleave', () => fbHoverTl.reverse());
+      }
+
+      // —— Scroll-triggered subtle effect for map (no vertical movement) ——
+      if (mapWrap) {
+        ScrollTrigger.create({
+          trigger: mapWrap,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
+          onUpdate: (self) => {
+            const progress = self.progress;
+            gsap.to(mapWrap, {
+              scale: 1 + progress * 0.01,
+              duration: 0.3,
+              ease: 'none',
+            });
+          },
+        });
+      }
+
+      // —— Card subtle scale on scroll ——
+      ScrollTrigger.create({
+        trigger: card,
+        start: 'top 80%',
+        end: 'bottom 20%',
+        scrub: 0.5,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          gsap.to(card, {
+            scale: 1 - progress * 0.01,
+            duration: 0.3,
+            ease: 'none',
+          });
+        },
+      });
+
+      // —— Title letter stagger (split text effect) ——
+      if (title) {
+        const titleText = title.textContent || '';
+        title.innerHTML = titleText.split('').map((char, i) => 
+          char === ' ' ? ' ' : `<span style="display: inline-block;">${char}</span>`
+        ).join('');
+        const titleLetters = title.querySelectorAll('span');
+        gsap.set(titleLetters, { opacity: 0, y: 20, rotationX: -90 });
+        gsap.to(titleLetters, {
+          opacity: 1,
+          y: 0,
+          rotationX: 0,
+          duration: 0.4,
+          stagger: 0.03,
+          delay: 0.3,
+          ease: 'back.out(1.2)',
+        });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initContactAnimations);
+    } else {
+      initContactAnimations();
+    }
+  </script>
 </Layout>

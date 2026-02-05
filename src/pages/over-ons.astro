@@ -23,6 +23,7 @@ import { OverOnsPage } from '../components/OverOnsPage';
       display: flex;
       align-items: flex-end;
       justify-content: center;
+      overflow: hidden;
     }
     @media (min-width: 1024px) {
       .overons-hero { min-height: 60vh; }
@@ -30,17 +31,24 @@ import { OverOnsPage } from '../components/OverOnsPage';
     .overons-hero-inner {
       position: relative;
       width: 100%;
-      max-width: 72rem;
-      margin-left: auto;
-      margin-right: auto;
       padding: 2.5rem 1.25rem 3rem;
       z-index: 2;
+      box-sizing: border-box;
     }
     @media (min-width: 640px) {
       .overons-hero-inner { padding: 3rem 2rem 4rem; }
     }
     @media (min-width: 1024px) {
       .overons-hero-inner { padding: 4rem 2.5rem 5rem; }
+    }
+    .overons-hero-content {
+      max-width: 56rem;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 0.5rem;
+    }
+    @media (min-width: 640px) {
+      .overons-hero-content { padding: 0 1rem; }
     }
     .overons-hero-label {
       font-family: var(--font-display);
@@ -66,7 +74,6 @@ import { OverOnsPage } from '../components/OverOnsPage';
       line-height: 1.65;
       color: #0a0a0a;
       margin: 1rem 0 0 0;
-      max-width: 28rem;
     }
     @media (min-width: 640px) {
       .overons-hero-lead { font-size: 1.125rem; margin-top: 1.25rem; }
@@ -99,7 +106,7 @@ import { OverOnsPage } from '../components/OverOnsPage';
       .overons-section { padding: 5.5rem 2.5rem; }
     }
     .overons-container {
-      max-width: 72rem;
+      max-width: 80rem;
       margin-left: auto;
       margin-right: auto;
       padding: 0 0.5rem;
@@ -119,11 +126,14 @@ import { OverOnsPage } from '../components/OverOnsPage';
       .overons-blocks { padding-top: 6rem; padding-bottom: 6rem; }
     }
     .overons-blocks-inner {
-      max-width: 38rem;
+      max-width: 56rem;
       margin-left: auto;
       margin-right: auto;
     }
     .overons-block {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
       padding-top: 2.5rem;
       padding-bottom: 2.5rem;
       border-bottom: 1px solid rgba(0, 0, 0, 0.08);
@@ -137,25 +147,35 @@ import { OverOnsPage } from '../components/OverOnsPage';
     }
     @media (min-width: 640px) {
       .overons-block {
+        gap: 2rem;
         padding-top: 3rem;
         padding-bottom: 3rem;
       }
     }
+    .overons-block-content {
+      flex: 1;
+      min-width: 0;
+    }
 
     .overons-icon {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: center;
-      width: 2.5rem;
-      height: 2.5rem;
+      width: 4rem;
+      height: 4rem;
       color: #0a0a0a;
       flex-shrink: 0;
     }
-    .overons-icon svg { width: 1.35rem; height: 1.35rem; }
-    .overons-block .overons-icon {
-      margin-bottom: 0.25rem;
+    .overons-icon svg { width: 2.25rem; height: 2.25rem; }
+    @media (min-width: 640px) {
+      .overons-icon { width: 5.5rem; height: 5.5rem; }
+      .overons-icon svg { width: 3rem; height: 3rem; }
     }
-    .overons-block .overons-label {
+    @media (min-width: 1024px) {
+      .overons-icon { width: 6.5rem; height: 6.5rem; }
+      .overons-icon svg { width: 3.5rem; height: 3.5rem; }
+    }
+    .overons-block-content .overons-label {
       margin-top: 0;
     }
     .overons-label {
@@ -187,7 +207,7 @@ import { OverOnsPage } from '../components/OverOnsPage';
     @media (min-width: 640px) {
       .overons-cta-section { padding: 5.5rem 2rem 6.5rem; }
     }
-    .overons-cta-section .overons-container { max-width: 32rem; }
+    .overons-cta-section .overons-container { max-width: 40rem; }
     .overons-cta-text {
       font-family: var(--font-body);
       font-size: 1.0625rem;

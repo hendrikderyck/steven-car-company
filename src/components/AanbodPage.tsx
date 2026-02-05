@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react"
 import { motion } from "framer-motion"
 import { AanbodCard } from "./AanbodCard"
-import { mockCars } from "../data/cars"
 import type { Car } from "../data/cars"
 
 const SORT_OPTIONS = [
@@ -15,8 +14,17 @@ const SORT_OPTIONS = [
   { value: "year-desc", label: "Bouwjaar aflopend" },
 ] as const
 
-const BRANDS = ["Alle", ...[...new Set(mockCars.map((c) => c.brand))].sort()]
-const FUELS = ["Alle", ...[...new Set(mockCars.map((c) => c.fuel))].sort()]
+interface AanbodPageProps {
+  cars: Car[]
+}
+
+function getBrands(cars: Car[]): string[] {
+  return ["Alle", ...[...new Set(cars.map((c) => c.brand))].sort()]
+}
+
+function getFuels(cars: Car[]): string[] {
+  return ["Alle", ...[...new Set(cars.map((c) => c.fuel))].sort()]
+}
 
 function yearValue(y: string): number {
   const [mm, yyyy] = y.split("/").map(Number)
@@ -67,7 +75,7 @@ function filterAndSort(
   return sorted
 }
 
-export function AanbodPage() {
+export function AanbodPage({ cars }: AanbodPageProps) {
   const [sort, setSort] = useState<string>("default")
   const [filters, setFilters] = useState({
     brand: "Alle",
@@ -78,9 +86,12 @@ export function AanbodPage() {
     priceMax: "",
   })
 
+  const brands = useMemo(() => getBrands(cars), [cars])
+  const fuels = useMemo(() => getFuels(cars), [cars])
+
   const filteredCars = useMemo(
-    () => filterAndSort(mockCars, filters, sort),
-    [filters, sort]
+    () => filterAndSort(cars, filters, sort),
+    [cars, filters, sort]
   )
 
   return (
@@ -124,7 +135,7 @@ export function AanbodPage() {
                     onChange={(e) => setFilters((f) => ({ ...f, brand: e.target.value }))}
                     className="w-full font-body text-sm text-ink bg-bg border border-border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ink/20"
                   >
-                    {BRANDS.map((b) => (
+                    {brands.map((b) => (
                       <option key={b} value={b}>{b}</option>
                     ))}
                   </select>
@@ -137,7 +148,7 @@ export function AanbodPage() {
                     onChange={(e) => setFilters((f) => ({ ...f, fuel: e.target.value }))}
                     className="w-full font-body text-sm text-ink bg-bg border border-border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ink/20"
                   >
-                    {FUELS.map((f) => (
+                    {fuels.map((f) => (
                       <option key={f} value={f}>{f}</option>
                     ))}
                   </select>

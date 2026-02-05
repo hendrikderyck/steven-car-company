@@ -15,6 +15,19 @@ export interface Car {
   features: string[]
   imageUrl: string
   btwAftrekbaar?: boolean
+  // Additional fields
+  bodyType?: string
+  condition?: string // "Tweedehands" etc
+  previousOwners?: number
+  fuelConsumption?: string // "5,0 l/100 km (comb.)"
+  co2Emissions?: number // g/km
+  interiorType?: string
+  interiorColor?: string
+  numberOfDoors?: number
+  seatingCapacity?: number
+  htmlWrapper?: string
+  /** Full AutoScout24 listing URL for the detail page fetch */
+  listingUrl?: string
 }
 
 // AutoScout24 CDN: path eindigt op .jpg, size bv. 250x188 of 800x600

@@ -1,0 +1,387 @@
+/* AutoScout24 listing wrapper styles - compact horizontal layout */
+.as24-listing-wrapper {
+  margin-bottom: 0.75rem;
+}
+
+.as24-listing-wrapper .as24-listing-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.as24-listing-wrapper article.dp-listing-item__wrapper {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  align-items: stretch;
+}
+
+.as24-listing-wrapper .as24-listing-link:hover article.dp-listing-item__wrapper {
+  border-color: rgba(10, 10, 10, 0.25);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* Gallery wrapper - compact fixed size on desktop; align left with header text */
+.as24-listing-wrapper .dp-listing-item__gallery-wrapper {
+  width: calc(100% - 24px);
+  margin-left: 12px;
+  margin-right: 12px;
+  flex-shrink: 0;
+  background: var(--color-border);
+  min-height: 140px;
+  max-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .as24-listing-wrapper .dp-listing-item__gallery-wrapper {
+    width: 220px;
+    min-width: 220px;
+    margin-left: 14px;
+    margin-right: 0;
+    min-height: 130px;
+    max-height: 150px;
+    height: 140px;
+  }
+}
+
+.as24-listing-wrapper .dp-listing-item-gallery__picture-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-border);
+}
+
+/* Handle empty picture wrappers */
+.as24-listing-wrapper .dp-listing-item-gallery__picture-wrapper:empty::before {
+  content: "Geen afbeelding";
+  color: var(--color-muted);
+  font-size: 0.875rem;
+  font-family: var(--font-body);
+}
+
+.as24-listing-wrapper .dp-new-gallery__slider {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.as24-listing-wrapper .dp-new-gallery__item {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Only use absolute positioning if there are multiple items */
+.as24-listing-wrapper .dp-new-gallery__slider:has(.dp-new-gallery__item:nth-child(2)) .dp-new-gallery__item {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.as24-listing-wrapper .dp-new-gallery__picture {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.as24-listing-wrapper .dp-new-gallery__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.as24-listing-wrapper .dp-new-gallery__btn {
+  display: none; /* Hide navigation buttons for now */
+}
+
+.as24-listing-wrapper .dp-new-gallery__counter {
+  display: none;
+}
+
+/* Header section - full width top row, compact padding */
+.as24-listing-wrapper .dp-list-item_header {
+  padding: 10px 14px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: var(--color-surface);
+  flex-basis: 100%;
+  order: 1;
+}
+
+.as24-listing-wrapper .dp-listing-item-title-wrapper h2 {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-ink);
+  margin: 0;
+  line-height: 1.35;
+}
+
+.as24-listing-wrapper .dp-listing-item-title-wrapper .version {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  margin-left: 4px;
+}
+
+.as24-listing-wrapper .dp-listing-item-title-wrapper .subtitle {
+  font-size: 0.7rem;
+  color: var(--color-muted);
+  margin: 2px 0 0 0;
+}
+
+/* Price section - right column next to image */
+.as24-listing-wrapper .dp-listing-item-data {
+  padding: 10px 14px 12px;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: var(--color-surface);
+  order: 3;
+}
+
+@media (min-width: 640px) {
+  .as24-listing-wrapper .dp-listing-item-data {
+    padding: 10px 14px 12px;
+    flex: 1 1 0;
+    min-width: 200px;
+  }
+}
+
+.as24-listing-wrapper .dp-listing-item__pricerow {
+  margin-bottom: 6px;
+}
+
+.as24-listing-wrapper .dp-listing-item__price {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-ink);
+  line-height: 1.2;
+}
+
+.as24-listing-wrapper .dp-listing-item__pricing-included-vat {
+  font-size: 0.65rem;
+  color: var(--color-muted);
+  margin-left: 6px;
+}
+
+.as24-listing-wrapper .dp-listing-item__net-price-subtitle {
+  font-size: 0.65rem;
+  color: var(--color-muted);
+  margin-top: 1px;
+}
+
+.as24-listing-wrapper .dp-listing-item__price-label {
+  margin-top: 2px;
+}
+
+.as24-listing-wrapper .dp-listing-item__price-label p {
+  font-size: 0.65rem;
+  color: var(--color-muted);
+  margin: 0;
+}
+
+.as24-listing-wrapper .price-label-bar {
+  height: 3px;
+  background: var(--color-border);
+  border-radius: 2px;
+  margin-top: 2px;
+  max-width: 80px;
+}
+
+.as24-listing-wrapper .price-label-bar--good {
+  background: #4cb944;
+}
+
+.as24-listing-wrapper .price-label-bar--fair {
+  background: #d0a91b;
+}
+
+/* Detail table - compact grid */
+.as24-listing-wrapper .dp-listing-item__detail-table-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px 10px;
+  font-size: 0.7rem;
+  color: var(--color-muted);
+  margin-top: 6px;
+}
+
+@media (max-width: 639px) {
+  .as24-listing-wrapper .dp-listing-item__detail-table-container {
+    gap: 4px 8px;
+    font-size: 0.7rem;
+  }
+}
+
+.as24-listing-wrapper .dp-listing-item__detail-item {
+  font-weight: 500;
+}
+
+.as24-listing-wrapper .dp-listing-item__detail-item--noBorderBottom {
+  border-bottom: none;
+}
+
+/* Hide elements we don't need */
+.as24-listing-wrapper button,
+.as24-listing-wrapper .dp-new-gallery__btn,
+.as24-listing-wrapper svg[data-testid="call-icon"],
+.as24-listing-wrapper .dp-top__contact,
+.as24-listing-wrapper svg,
+.as24-listing-wrapper .dp-listing-item__superdeal-tooltip-icon,
+.as24-listing-wrapper [aria-describedby] {
+  display: none;
+}
+
+/* Fix superdeal pricing display */
+.as24-listing-wrapper .dp-listing-item__superdeal-price-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.as24-listing-wrapper .dp-listing-item__superdeal-container {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.as24-listing-wrapper .dp-listing-item__superdeal-strikethrough {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.as24-listing-wrapper .dp-listing-item__superdeal-strikethrough div[style*="line-through"] {
+  font-size: 1rem;
+  color: var(--color-muted);
+  text-decoration: line-through;
+}
+
+.as24-listing-wrapper .dp-listing-item__superdeal-highlight-price-span {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+/* Reset AutoScout24 styles to use our design system */
+.as24-listing-wrapper * {
+  box-sizing: border-box;
+}
+
+.as24-listing-wrapper h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.as24-listing-wrapper .version {
+  font-family: var(--font-body);
+  color: var(--color-muted);
+}
+
+.as24-listing-wrapper .subtitle {
+  font-family: var(--font-body);
+  color: var(--color-muted);
+}
+
+/* Ensure links work properly */
+.as24-listing-wrapper a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* Fix layout when gallery is empty */
+.as24-listing-wrapper .dp-listing-item__gallery-wrapper:has(.dp-listing-item-gallery__picture-wrapper:empty) {
+  background: var(--color-border);
+  min-height: 130px;
+}
+
+@media (min-width: 640px) {
+  .as24-listing-wrapper .dp-listing-item__gallery-wrapper:has(.dp-listing-item-gallery__picture-wrapper:empty) {
+    min-height: 140px;
+  }
+}
+
+/* Ensure images display properly */
+.as24-listing-wrapper img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.as24-listing-wrapper picture {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Fix any inline styles that might break layout */
+.as24-listing-wrapper .dp-new-gallery__item[style*="transform"] {
+  position: relative !important;
+  transform: translateX(0%) !important;
+}
+
+/* Ensure gallery items are visible */
+.as24-listing-wrapper .dp-new-gallery__item:first-child {
+  position: relative;
+  transform: translateX(0%) !important;
+}
+
+/* Article layout: row wrap so header takes full width, then gallery + data side by side */
+.as24-listing-wrapper article.dp-listing-item__wrapper {
+  gap: 0;
+}
+
+.as24-listing-wrapper article.dp-listing-item__wrapper > .dp-listing-item__gallery-wrapper {
+  order: 2;
+  flex-shrink: 0;
+}
+
+.as24-listing-wrapper article.dp-listing-item__wrapper > .dp-listing-item-data {
+  order: 3;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* Responsive: stacked on small screens, compact image */
+@media (max-width: 639px) {
+  .as24-listing-wrapper .dp-listing-item__gallery-wrapper {
+    aspect-ratio: 16/10;
+    min-height: 140px;
+    max-height: 180px;
+  }
+  
+  .as24-listing-wrapper .dp-list-item_header {
+    padding: 10px 12px;
+  }
+  
+  .as24-listing-wrapper .dp-listing-item-data {
+    padding: 8px 12px 12px;
+  }
+}
