@@ -1,12 +1,21 @@
 import type { APIRoute } from 'astro';
-import { fetchListings } from '../../utils/fetch-listings';
+import { fetchAllListings } from '../../utils/fetch-listings';
 
 export const GET: APIRoute = async () => {
   try {
-    const result = await fetchListings();
-    
+    console.log('Fetching all listings...');
+    const listings = await fetchAllListings();
+    console.log(`Successfully fetched ${listings.length} listings`);
+
     return new Response(
-      JSON.stringify(result, null, 2),
+      JSON.stringify(
+        {
+          listings,
+          count: listings.length,
+        },
+        null,
+        2
+      ),
       {
         status: 200,
         headers: {
@@ -14,6 +23,7 @@ export const GET: APIRoute = async () => {
         },
       }
     );
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error('API Error:', error);
     return new Response(

@@ -1,20 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { AanbodPage } from '../../components/AanbodPage';
-import type { Car } from '../../data/cars';
-import { transformApiListingsToCars } from '../../utils/api-listing-to-car';
-import { fetchListings } from '../../utils/fetch-listings';
-
-let cars: Car[] = [];
-
-try {
-  const result = await fetchListings();
-  cars = transformApiListingsToCars(result.listings);
-} catch (error) {
-  console.error('Error fetching cars:', error);
-}
 ---
 
 <Layout title="Ons aanbod – Steven Car Company BV" description="Onze actuele voorraad jonge occasions. Zorgvuldig geselecteerd, eerlijk geprijsd. Kom gerust langs op afspraak of bel voor meer info.">
-  <AanbodPage cars={cars} client:load />
+  <AanbodPage cars={[]} client:load />
 </Layout>

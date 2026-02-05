@@ -20,6 +20,7 @@ export interface ScrapedListing {
   price: number | null;
   currency: string | null;
   images: string[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   rawLdJson: any;
   error?: string;
 }
@@ -152,10 +153,11 @@ function parseListingFromLdJson(
   ldText: string,
   url: string
 ): ScrapedListing {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let raw: any;
   try {
     raw = JSON.parse(ldText);
-  } catch (e) {
+  } catch {
     return {
       url,
       error: 'Failed to parse ld+json',
@@ -175,6 +177,7 @@ function parseListingFromLdJson(
     };
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let product: any = null;
 
   if (Array.isArray(raw)) {
@@ -201,6 +204,7 @@ function parseListingFromLdJson(
     ? product.offers[0] || {}
     : product.offers || {};
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function brandName(brand: any): string | null {
     if (!brand) return null;
     if (typeof brand === 'string') return brand;
@@ -212,6 +216,7 @@ function parseListingFromLdJson(
   if (item.image) images = item.image;
   else if (product.image) images = product.image;
   if (!Array.isArray(images)) images = [images];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   images = images.filter((src: any) => typeof src === 'string');
 
   return {

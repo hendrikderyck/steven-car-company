@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 gsap.registerPlugin(ScrollTrigger)
 
-const IMG_INTRO = "/banner.webp"
+const IMG_INTRO = "/banner.png"
 
 const icons = {
   filter: (

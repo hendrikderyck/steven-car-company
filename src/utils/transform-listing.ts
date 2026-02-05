@@ -49,7 +49,7 @@ function extractModelFromUrl(url: string, id?: string): string | null {
       
       // Check if first part is brand
       const firstPart = slugParts[0].toLowerCase();
-      let startIdx = commonBrands.includes(firstPart) ? 1 : 0;
+      const startIdx = commonBrands.includes(firstPart) ? 1 : 0;
       
       // Find end of model (before features or UUID pattern)
       let modelEnd = slugParts.length;

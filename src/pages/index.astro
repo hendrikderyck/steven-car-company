@@ -1,22 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { HomeHero } from '../components/HomeHero';
-import type { Car } from '../data/cars';
-import { transformApiListingsToCars } from '../utils/api-listing-to-car';
-import { fetchListings } from '../utils/fetch-listings';
-
-let highlightedCars: Car[] = [];
-try {
-  const result = await fetchListings();
-  const all = transformApiListingsToCars(result.listings ?? []);
-  highlightedCars = all.slice(0, 3);
-} catch {
-  // Keep empty; HomeHero will show no cars if API fails
-}
 ---
 
 <Layout title="Steven Car Company BV – Jonge Occasions Ninove" headerDark>
-  <HomeHero client:load highlightedCars={highlightedCars} />
+  <HomeHero client:load />
 
   <style is:global>
     /* —— Home Hero: Pitch Black & White · Sharp Monolith —— */

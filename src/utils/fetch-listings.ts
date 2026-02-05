@@ -4,12 +4,6 @@ import {
   normalizeDealerUrl,
 } from './listings';
 
-const FETCH_HEADERS = {
-  'User-Agent':
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0 Safari/537.36',
-  Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-};
-
 function findListingLdJson(html: string): string | null {
   const marker = 'type="application/ld+json"';
   let idx = 0;
@@ -33,6 +27,7 @@ function findListingLdJson(html: string): string | null {
   return null;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function extractRelevantFields(ldJson: any, url: string) {
   let product = null;
 
@@ -67,6 +62,7 @@ function extractRelevantFields(ldJson: any, url: string) {
   const item = offers.itemOffered || product.itemOffered || product;
 
   // Extract brand
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function getBrand(brand: any): string | null {
     if (!brand) return null;
     if (typeof brand === 'string') return brand;
@@ -79,6 +75,7 @@ function extractRelevantFields(ldJson: any, url: string) {
   if (item.image) images = item.image;
   else if (product.image) images = product.image;
   if (!Array.isArray(images)) images = [images];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   images = images.filter((src: any) => typeof src === 'string');
 
   // Extract mileage
@@ -292,16 +289,14 @@ function extractListingHtmlWrappers(html: string): Map<string, string> {
   const wrappers = new Map<string, string>();
   
   // Find all article tags with dp-listing-item__wrapper class
-  // Pattern matches: <article ... id="..." ... class="...dp-listing-item__wrapper..." ...>...</article>
-  // The attributes can be in any order, so we check for both id and class separately
   const articlePattern = /<article[^>]*class="[^"]*dp-listing-item__wrapper[^"]*"[^>]*>([\s\S]*?)<\/article>/g;
   let match;
   
   while ((match = articlePattern.exec(html)) !== null) {
-    const fullMatch = match[0]; // Full article tag including opening and closing
+    const fullMatch = match[0];
     const openingTag = fullMatch.match(/<article[^>]*>/)?.[0] || '';
     
-    // Extract ID from opening tag (can be before or after class)
+    // Extract ID from opening tag
     const idMatch = openingTag.match(/id="([^"]+)"/);
     if (idMatch) {
       const id = idMatch[1];
@@ -315,7 +310,12 @@ function extractListingHtmlWrappers(html: string): Map<string, string> {
 async function fetchListingDetails(url: string) {
   try {
     const res = await fetch(url, {
-      headers: FETCH_HEADERS,
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0 Safari/537.36',
+        Accept:
+          'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      },
     });
 
     if (!res.ok) {
@@ -331,7 +331,7 @@ async function fetchListingDetails(url: string) {
     let raw;
     try {
       raw = JSON.parse(ldText);
-    } catch (e) {
+    } catch {
       return { url, error: 'Failed to parse ld+json' };
     }
 
@@ -341,52 +341,17 @@ async function fetchListingDetails(url: string) {
     }
 
     return extracted;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     return { url, error: error.message || 'Unknown error' };
   }
 }
 
-export interface Listing {
-  url: string;
-  title: string | null;
-  description: string | null;
-  brand: string | null;
-  model: string | null;
-  bodyType: string | null;
-  fuelType: string | null;
-  transmission: string | null;
-  mileageKm: number | null;
-  firstRegistration: string | null;
-  price: number | null;
-  currency: string | null;
-  power: string | null;
-  images: string[];
-  previousOwners: number | null;
-  fuelConsumption: string | null;
-  co2Emissions: number | null;
-  interiorType: string | null;
-  interiorColor: string | null;
-  numberOfDoors: number | null;
-  seatingCapacity: number | null;
-  condition: string | null;
-  htmlWrapper?: string;
-}
-
-export interface FetchListingsResult {
-  listings: Listing[];
-  count: number;
-}
-
-/**
- * Fetches all listings from the dealer website.
- * This function can be used both during build time (SSG) and at runtime (API routes).
- */
-export async function fetchListings(): Promise<FetchListingsResult> {
+export async function fetchAllListings() {
   try {
-    console.log('Fetching all listing URLs and HTML...');
     const baseUrl = normalizeDealerUrl(DEALER_URL);
     const seen = new Set<string>();
-    const htmlWrappers = new Map<string, string>(); // Map of listing ID to HTML wrapper
+    const htmlWrappers = new Map<string, string>();
 
     // Fetch all pages and extract HTML wrappers
     let page = 1;
@@ -395,64 +360,50 @@ export async function fetchListings(): Promise<FetchListingsResult> {
       pageUrl.searchParams.set('page', String(page));
 
       const res = await fetch(pageUrl.toString(), {
-        headers: FETCH_HEADERS,
+        headers: {
+          'User-Agent':
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0 Safari/537.36',
+          Accept:
+            'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        },
       });
 
       if (!res.ok) {
-        console.log(`Page ${page}: HTTP ${res.status}, stopping`);
         break;
       }
 
       const html = await res.text();
       const pageUrls = extractListingUrls(html);
       
-      // Debug: check if HTML contains the wrapper class
-      const hasWrapperClass = html.includes('dp-listing-item__wrapper');
-      console.log(`Page ${page}: HTML length: ${html.length}, contains wrapper class: ${hasWrapperClass}`);
-      
       // Extract HTML wrappers from this page
       const pageWrappers = extractListingHtmlWrappers(html);
-      console.log(`Page ${page}: Extracted ${pageWrappers.size} HTML wrappers`);
       if (pageWrappers.size > 0) {
         pageWrappers.forEach((html, id) => {
           htmlWrappers.set(id, html);
-          console.log(`  - Wrapper for ID: ${id.substring(0, 8)}... (${html.length} chars)`);
         });
-      } else if (hasWrapperClass) {
-        // Debug: try to find why extraction failed
-        const sampleMatch = html.match(/<article[^>]*class="[^"]*dp-listing-item__wrapper[^"]*"[^>]*>/);
-        console.log(`  - Sample article tag found: ${sampleMatch ? 'yes' : 'no'}`);
-        if (sampleMatch) {
-          console.log(`  - Sample tag: ${sampleMatch[0].substring(0, 200)}`);
-        }
       }
 
       if (pageUrls.length === 0) {
-        console.log(`Page ${page}: No URLs found, stopping`);
         break;
       }
 
       const newUrls = pageUrls.filter((u) => !seen.has(u));
       if (newUrls.length === 0) {
-        console.log(`Page ${page}: No new URLs, stopping`);
         break;
       }
       
-      console.log(`Page ${page}: Found ${newUrls.length} new listings (total: ${seen.size + newUrls.length})`);
       newUrls.forEach((u) => seen.add(u));
 
       page += 1;
     }
 
     const listingUrls = Array.from(seen).sort();
-    console.log(`Found ${listingUrls.length} total listings with ${htmlWrappers.size} HTML wrappers`);
 
     if (listingUrls.length === 0) {
-      return { listings: [], count: 0 };
+      return [];
     }
 
-    console.log('Fetching details for each listing...');
-    const listings: Listing[] = [];
+    const listings = [];
     const batchSize = 5;
 
     for (let i = 0; i < listingUrls.length; i += batchSize) {
@@ -464,8 +415,6 @@ export async function fetchListings(): Promise<FetchListingsResult> {
           console.warn(`Error fetching ${result.url}: ${result.error}`);
         } else {
           // Extract ID from URL to match with HTML wrapper
-          // URL format: .../bmw-118-...-6b17f310-39a7-4f10-aa7f-4aafa0fde646
-          // The UUID is the last part after the last dash-separated segment
           const urlParts = result.url.split('/');
           const lastPart = urlParts[urlParts.length - 1];
           
@@ -476,30 +425,19 @@ export async function fetchListings(): Promise<FetchListingsResult> {
           // Add HTML wrapper if available
           const htmlWrapper = htmlWrappers.get(id);
           if (htmlWrapper) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (result as any).htmlWrapper = htmlWrapper;
-            console.log(`  ✓ Added HTML wrapper for ${id.substring(0, 8)}...`);
-          } else {
-            console.log(`  ✗ No HTML wrapper found for ${id.substring(0, 8)}... (available IDs: ${Array.from(htmlWrappers.keys()).slice(0, 3).map(k => k.substring(0, 8)).join(', ')})`);
           }
           
-          listings.push(result as Listing);
+          listings.push(result);
         }
       }
-      
-      console.log(`Processed ${Math.min(i + batchSize, listingUrls.length)}/${listingUrls.length} listings`);
     }
 
-    console.log(`Successfully fetched ${listings.length} listings`);
-
-    return {
-      listings,
-      count: listings.length,
-    };
+    return listings;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error('Error fetching listings:', error);
-    return {
-      listings: [],
-      count: 0,
-    };
+    return [];
   }
 }

@@ -1,15 +1,17 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { Car } from "../data/cars";
 import { isRealListingId } from "../utils/listings";
+import { transformApiListingsToCars } from "../utils/api-listing-to-car";
+import type { ApiListing } from "../utils/api-listing-to-car";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const HIGHLIGHT_COUNT = 3;
 
 interface HomeHeroProps {
-  /** First N listings from aanbod */
+  /** First N listings from aanbod - deprecated, now fetched at runtime */
   highlightedCars?: Car[];
 }
 
@@ -22,9 +24,39 @@ function formatPrice(price: number) {
 }
 
 export function HomeHero({ highlightedCars: propCars = [] }: HomeHeroProps) {
-  const highlightedCars = propCars.slice(0, HIGHLIGHT_COUNT);
+  const [highlightedCars, setHighlightedCars] = useState<Car[]>(propCars.slice(0, HIGHLIGHT_COUNT));
+  const [isLoading, setIsLoading] = useState(propCars.length === 0);
 
-  const heroVideoRef = useRef<HTMLVideoElement>(null);
+  // Fetch listings at runtime
+  useEffect(() => {
+    if (propCars.length > 0) {
+      // If props are provided (fallback), use them
+      return;
+    }
+
+    async function fetchListings() {
+      try {
+        setIsLoading(true);
+        const response = await fetch('/api/listings.json');
+        if (!response.ok) {
+          throw new Error('Failed to fetch listings');
+        }
+        const data = await response.json();
+        const listings = data.listings as ApiListing[];
+        const cars = transformApiListingsToCars(listings);
+        setHighlightedCars(cars.slice(0, HIGHLIGHT_COUNT));
+      } catch (error) {
+        console.error('Error fetching listings:', error);
+        setHighlightedCars([]);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchListings();
+  }, [propCars.length]);
+
+  const heroVideoRef = useRef<HTMLImageElement>(null);
   const heroOverlayRef = useRef<HTMLDivElement>(null);
   const heroInnerRef = useRef<HTMLDivElement>(null);
   const heroLogoWrapRef = useRef<HTMLHeadingElement>(null);
@@ -64,7 +96,6 @@ export function HomeHero({ highlightedCars: propCars = [] }: HomeHeroProps) {
 
       // —— In de kijker: scroll-triggered ——
       const highlightHeader = highlightHeaderRef.current;
-      const highlightGrid = highlightGridRef.current;
       const highlightCards = highlightCardsRef.current.filter(Boolean) as HTMLElement[];
       const highlightLink = highlightLinkRef.current;
 
@@ -182,14 +213,11 @@ export function HomeHero({ highlightedCars: propCars = [] }: HomeHeroProps) {
     <>
       {/* Hero + CTA — Pitch Black & White · Sharp */}
       <section className="home-hero-monolith">
-        <video
+        <img
           ref={heroVideoRef}
-          src="/hero.mp4"
+          src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&h=1080&fit=crop"
+          alt=""
           className="home-hero-bg"
-          autoPlay
-          muted
-          loop
-          playsInline
           aria-hidden
         />
         <div ref={heroOverlayRef} className="home-hero-overlay" aria-hidden />
@@ -197,7 +225,7 @@ export function HomeHero({ highlightedCars: propCars = [] }: HomeHeroProps) {
         <div ref={heroInnerRef} className="home-hero-inner">
           <h1 ref={heroLogoWrapRef} className="home-hero-logo-wrap">
             <img
-              src="/logo.webp"
+              src="/logo.png"
               alt="Steven Car Company"
               className="home-hero-logo"
             />
@@ -229,25 +257,35 @@ export function HomeHero({ highlightedCars: propCars = [] }: HomeHeroProps) {
             <h2 id="home-highlight-heading" className="home-highlight-title">In de kijker</h2>
           </div>
           <div ref={highlightGridRef} className="home-highlight-grid">
-            {highlightedCars.map((car, i) => (
-              <a
-                key={car.id}
-                ref={(el) => { highlightCardsRef.current[i] = el; }}
-                href={isRealListingId(car.id) ? `/aanbod/${car.id}/` : "/aanbod/"}
-                className="home-highlight-card"
-              >
-                <div className="home-highlight-img-wrap">
-                  <img src={car.imageUrl} alt={car.title} className="home-highlight-img" />
-                </div>
-                <div className="home-highlight-body">
-                  <h3 className="home-highlight-card-title">{car.title}</h3>
-                  <p className="home-highlight-specs">
-                    {car.km.toLocaleString("nl-BE")} km · {car.year} · {car.power}
-                  </p>
-                  <p className="home-highlight-price">{formatPrice(car.price)}</p>
-                </div>
-              </a>
-            ))}
+            {isLoading ? (
+              <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '2rem', color: '#0a0a0a' }}>
+                Laden...
+              </div>
+            ) : highlightedCars.length === 0 ? (
+              <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '2rem', color: '#0a0a0a' }}>
+                Geen voertuigen beschikbaar
+              </div>
+            ) : (
+              highlightedCars.map((car, i) => (
+                <a
+                  key={car.id}
+                  ref={(el) => { highlightCardsRef.current[i] = el; }}
+                  href={isRealListingId(car.id) ? `/aanbod/${car.id}/` : "/aanbod/"}
+                  className="home-highlight-card"
+                >
+                  <div className="home-highlight-img-wrap">
+                    <img src={car.imageUrl} alt={car.title} className="home-highlight-img" />
+                  </div>
+                  <div className="home-highlight-body">
+                    <h3 className="home-highlight-card-title">{car.title}</h3>
+                    <p className="home-highlight-specs">
+                      {car.km.toLocaleString("nl-BE")} km · {car.year} · {car.power}
+                    </p>
+                    <p className="home-highlight-price">{formatPrice(car.price)}</p>
+                  </div>
+                </a>
+              ))
+            )}
           </div>
           <a ref={highlightLinkRef} href="/aanbod/" className="home-highlight-link">
             Bekijk volledig aanbod →
@@ -270,7 +308,7 @@ export function HomeHero({ highlightedCars: propCars = [] }: HomeHeroProps) {
               </a>
             </div>
             <div ref={aboutImgRef} className="home-about-img-wrap">
-              <img src="/home_page_over_ons.webp" alt="Steven Car Company, Ninove" />
+              <img src="/home_page_over_ons.jpeg" alt="Steven Car Company, Ninove" />
             </div>
           </div>
         </div>
@@ -285,7 +323,7 @@ export function HomeHero({ highlightedCars: propCars = [] }: HomeHeroProps) {
           </div>
           <div className="home-diensten-layout">
             <div ref={dienstenImgRef} className="home-diensten-img-wrap">
-              <img src="/home_page_diensten.webp" alt="Steven Car Company, ons aanbod" />
+              <img src="/home_page_diensten.jpeg" alt="Steven Car Company, ons aanbod" />
             </div>
             <div className="home-diensten-cards">
               <div ref={(el) => { dienstenCardsRef.current[0] = el; }} className="home-diensten-card">

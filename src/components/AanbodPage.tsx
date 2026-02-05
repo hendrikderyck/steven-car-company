@@ -1,7 +1,9 @@
-import { useMemo, useState } from "react"
+import { useMemo, useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { AanbodCard } from "./AanbodCard"
 import type { Car } from "../data/cars"
+import { transformApiListingsToCars } from "../utils/api-listing-to-car"
+import type { ApiListing } from "../utils/api-listing-to-car"
 
 const SORT_OPTIONS = [
   { value: "default", label: "Standaard resultaten" },
@@ -15,6 +17,7 @@ const SORT_OPTIONS = [
 ] as const
 
 interface AanbodPageProps {
+  /** Cars from build-time - deprecated, now fetched at runtime */
   cars: Car[]
 }
 
@@ -75,7 +78,9 @@ function filterAndSort(
   return sorted
 }
 
-export function AanbodPage({ cars }: AanbodPageProps) {
+export function AanbodPage({ cars: propCars }: AanbodPageProps) {
+  const [cars, setCars] = useState<Car[]>(propCars)
+  const [isLoading, setIsLoading] = useState(propCars.length === 0)
   const [sort, setSort] = useState<string>("default")
   const [filters, setFilters] = useState({
     brand: "Alle",
@@ -85,6 +90,35 @@ export function AanbodPage({ cars }: AanbodPageProps) {
     priceMin: "",
     priceMax: "",
   })
+
+  // Fetch listings at runtime
+  useEffect(() => {
+    if (propCars.length > 0) {
+      // If props are provided (fallback), use them
+      return;
+    }
+
+    async function fetchListings() {
+      try {
+        setIsLoading(true);
+        const response = await fetch('/api/listings.json');
+        if (!response.ok) {
+          throw new Error('Failed to fetch listings');
+        }
+        const data = await response.json();
+        const listings = data.listings as ApiListing[];
+        const transformedCars = transformApiListingsToCars(listings);
+        setCars(transformedCars);
+      } catch (error) {
+        console.error('Error fetching listings:', error);
+        setCars([]);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchListings();
+  }, [propCars.length]);
 
   const brands = useMemo(() => getBrands(cars), [cars])
   const fuels = useMemo(() => getFuels(cars), [cars])
@@ -205,26 +239,34 @@ export function AanbodPage({ cars }: AanbodPageProps) {
             </aside>
 
             <div className="flex-1 min-w-0" data-embed-target="true">
-              <div className="space-y-4">
-                {filteredCars.map((car, i) => (
-                  <motion.div
-                    key={car.id}
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.25, delay: Math.min(i * 0.03, 0.3) }}
-                  >
-                    <AanbodCard car={car} />
-                  </motion.div>
-                ))}
-              </div>
-              {filteredCars.length === 0 && (
-                <p className="font-body text-muted text-center py-12">
-                  Geen voertuigen gevonden met deze filters. Pas de filters aan of{" "}
-                  <a href="https://www.autoscout24.be/nl/verkopers/steven-car-company-bv" target="_blank" rel="noopener noreferrer" className="text-ink font-medium hover:underline">
-                    bekijk ons volledige aanbod op AutoScout24
-                  </a>
-                  .
-                </p>
+              {isLoading ? (
+                <div className="text-center py-12">
+                  <p className="font-body text-muted">Laden...</p>
+                </div>
+              ) : (
+                <>
+                  <div className="space-y-4">
+                    {filteredCars.map((car, i) => (
+                      <motion.div
+                        key={car.id}
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.25, delay: Math.min(i * 0.03, 0.3) }}
+                      >
+                        <AanbodCard car={car} />
+                      </motion.div>
+                    ))}
+                  </div>
+                  {filteredCars.length === 0 && (
+                    <p className="font-body text-muted text-center py-12">
+                      Geen voertuigen gevonden met deze filters. Pas de filters aan of{" "}
+                      <a href="https://www.autoscout24.be/nl/verkopers/steven-car-company-bv" target="_blank" rel="noopener noreferrer" className="text-ink font-medium hover:underline">
+                        bekijk ons volledige aanbod op AutoScout24
+                      </a>
+                      .
+                    </p>
+                  )}
+                </>
               )}
             </div>
           </div>

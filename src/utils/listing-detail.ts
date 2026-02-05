@@ -365,65 +365,6 @@ function extractKeySpecs(html: string): KeySpec[] {
 }
 
 /**
- * Try to isolate main content: keep main, or body content between nav and footer.
- * AutoScout24 pages typically have content in the body, so we extract from there.
- */
-function extractMainContent(html: string): string {
-  // If HTML is empty or very short, return it as-is (will be handled by caller)
-  if (!html || html.trim().length < 50) {
-    return html;
-  }
-
-  // First, try to find the body content (most reliable)
-  const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
-  if (bodyMatch && bodyMatch[1]) {
-    const bodyContent = bodyMatch[1];
-    
-    // Remove header/navigation (usually at the start)
-    // Look for common AS24 header patterns and remove them
-    let cleanedBody = bodyContent
-      .replace(/<header[^>]*>[\s\S]*?<\/header>/gi, '')
-      .replace(/<nav[^>]*>[\s\S]*?<\/nav>/gi, '')
-      .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
-      .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '');
-    
-    // Remove footer (usually at the end)
-    cleanedBody = cleanedBody
-      .replace(/<footer[^>]*>[\s\S]*?<\/footer>/gi, '')
-      .replace(/<div[^>]*class="[^"]*footer[^"]*"[^>]*>[\s\S]*?<\/div>/gi, '');
-    
-    if (cleanedBody.trim().length > 100) {
-      return `<div class="as24-detail-main">${cleanedBody}</div>`;
-    }
-    
-    // If cleaning removed too much, use original body content
-    if (bodyContent.trim().length > 100) {
-      return `<div class="as24-detail-main">${bodyContent}</div>`;
-    }
-  }
-  
-  // Fallback: try to find main tag
-  const mainMatch = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i);
-  if (mainMatch && mainMatch[1].trim().length > 50) {
-    return `<main class="as24-detail-main">${mainMatch[1]}</main>`;
-  }
-  
-  // Try to find article tag
-  const articleMatch = html.match(/<article[^>]*>([\s\S]*?)<\/article>/i);
-  if (articleMatch && articleMatch[1].trim().length > 100) {
-    return `<div class="as24-detail-main">${articleMatch[1]}</div>`;
-  }
-  
-  // Last resort: use the entire HTML if it has substantial content
-  // This will be cleaned later
-  if (html.trim().length > 200) {
-    return html;
-  }
-  
-  return html;
-}
-
-/**
  * Fetch an AutoScout24 listing detail page, extract only car content, return title and HTML.
  */
 export async function fetchDetailPageHtml(
