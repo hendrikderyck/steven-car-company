@@ -29,7 +29,7 @@ export function AanbodCard({ car }: AanbodCardProps) {
     }
     
     // Only real listing IDs have a detail page; mock cars link to the list
-    const detailHref = isRealListingId(car.id) ? `/aanbod/${car.id}/` : "/aanbod/";
+    const detailHref = isRealListingId(car.id) ? `/aanbod/detail?id=${encodeURIComponent(car.id)}` : "/aanbod/";
     const articleMatch = processedHtml.match(/^(<article[^>]*>)([\s\S]*)(<\/article>)$/);
     if (articleMatch) {
       const openingTag = articleMatch[1];
@@ -71,7 +71,7 @@ export function AanbodCard({ car }: AanbodCardProps) {
       ? `${car.title} | ${car.features.slice(0, 6).join(" | ")}`
       : car.title
 
-  const detailHref = isRealListingId(car.id) ? `/aanbod/${car.id}/` : "/aanbod/";
+  const detailHref = isRealListingId(car.id) ? `/aanbod/detail?id=${encodeURIComponent(car.id)}` : "/aanbod/";
   return (
     <article className="bg-surface border border-border rounded overflow-hidden hover:border-ink/25 hover:shadow-[0_4px_20px_rgba(0,0,0,0.06)] transition-all duration-200">
       <a href={detailHref} className="flex flex-col sm:flex-row sm:min-h-0">

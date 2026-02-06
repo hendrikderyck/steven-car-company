@@ -1,0 +1,97 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { fetchTime } from '../utils/fetch-time';
+
+// Server-side execution triggered by form submission or URL param
+// NOTE: This only works in dev mode (npm run dev)
+// In static builds (npm run build), this code runs at build time, not runtime
+let directServerData = null;
+let directServerError = null;
+const shouldFetchDirect = Astro.url.searchParams.has('fetchDirect');
+
+if (shouldFetchDirect) {
+  try {
+    console.log('[test.astro] Executing fetchTime() directly server-side...');
+    directServerData = await fetchTime();
+    console.log('[test.astro] Direct server-side fetch successful:', directServerData);
+  } catch (error) {
+    directServerError = error instanceof Error ? error.message : 'Unknown error';
+    console.error('[test.astro] Error in direct server-side fetch:', error);
+  }
+}
+---
+
+<Layout title="Time Test">
+  <main class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold mb-8">Time Fetching Test</h1>
+    
+    <div class="bg-purple-100 dark:bg-purple-900 rounded-lg p-6 mb-6">
+      <h2 class="text-2xl font-semibold mb-4">Direct Server-Side JavaScript</h2>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+        This executes <code>fetchTime()</code> directly in the page's server-side code (not through an API route):
+      </p>
+      
+      <div id="direct-status" class="mb-4">
+        <form method="GET" action="/test" id="direct-form">
+          <input type="hidden" name="fetchDirect" value="true" />
+          <button 
+            type="submit"
+            id="fetch-time-direct-btn" 
+            class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Fetch Time Direct (Server-Side JS)
+          </button>
+        </form>
+      </div>
+      
+      {directServerError ? (
+        <div class="bg-red-100 dark:bg-red-900 border border-red-400 text-red-700 dark:text-red-300 px-4 py-3 rounded mb-4">
+          <strong>Error:</strong> {directServerError}
+        </div>
+      ) : directServerData ? (
+        <div class="space-y-2">
+          <div>
+            <strong>Time:</strong> {directServerData.time}
+          </div>
+          <div>
+            <strong>Date:</strong> {directServerData.date}
+          </div>
+          <div>
+            <strong>Timezone:</strong> {directServerData.timezone}
+          </div>
+          <div>
+            <strong>Timestamp:</strong> {directServerData.timestamp}
+          </div>
+          <div>
+            <strong>Fetched At:</strong> {directServerData.fetchedAt}
+          </div>
+        </div>
+      ) : (
+        <p class="text-gray-600 dark:text-gray-400">Click the button to fetch time directly server-side</p>
+      )}
+    </div>
+
+    <div class="bg-green-100 dark:bg-green-900 rounded-lg p-6">
+      <h2 class="text-2xl font-semibold mb-4">Analysis</h2>
+      <p class="mb-4">
+        This executes <code>fetchTime()</code> directly in the page's server-side code when the form is submitted - no API route involved.
+      </p>
+      <p class="mt-2 text-xs text-gray-500 dark:text-gray-500">
+        <strong>Note:</strong> This site uses static site generation (no SSR adapter). 
+        Server-side execution only works in <code>npm run dev</code> mode. 
+        In production builds (<code>npm run build</code>), this code runs at build time, not runtime - everything is baked in at build time.
+      </p>
+    </div>
+  </main>
+
+  <script>
+    // Direct server-side JavaScript - form submission triggers server-side execution
+    const directForm = document.getElementById('direct-form') as HTMLFormElement;
+    const fetchDirectBtn = document.getElementById('fetch-time-direct-btn');
+    
+    directForm?.addEventListener('submit', () => {
+      fetchDirectBtn!.textContent = 'Fetching...';
+      fetchDirectBtn!.disabled = true;
+    });
+  </script>
+</Layout>

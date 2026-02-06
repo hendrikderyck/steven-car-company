@@ -3,7 +3,7 @@ import { motion } from "framer-motion"
 import { AanbodCard } from "./AanbodCard"
 import type { Car } from "../data/cars"
 import { transformApiListingsToCars } from "../utils/api-listing-to-car"
-import type { ApiListing } from "../utils/api-listing-to-car"
+import { fetchAllListingsClient } from "../utils/client-listings"
 
 const SORT_OPTIONS = [
   { value: "default", label: "Standaard resultaten" },
@@ -81,6 +81,7 @@ function filterAndSort(
 export function AanbodPage({ cars: propCars }: AanbodPageProps) {
   const [cars, setCars] = useState<Car[]>(propCars)
   const [isLoading, setIsLoading] = useState(propCars.length === 0)
+  const [fetchedAt, setFetchedAt] = useState<string | null>(null)
   const [sort, setSort] = useState<string>("default")
   const [filters, setFilters] = useState({
     brand: "Alle",
@@ -91,7 +92,7 @@ export function AanbodPage({ cars: propCars }: AanbodPageProps) {
     priceMax: "",
   })
 
-  // Fetch listings at runtime
+  // Fetch listings at runtime (client-side)
   useEffect(() => {
     if (propCars.length > 0) {
       // If props are provided (fallback), use them
@@ -101,14 +102,13 @@ export function AanbodPage({ cars: propCars }: AanbodPageProps) {
     async function fetchListings() {
       try {
         setIsLoading(true);
-        const response = await fetch('/api/listings.json');
-        if (!response.ok) {
-          throw new Error('Failed to fetch listings');
-        }
-        const data = await response.json();
-        const listings = data.listings as ApiListing[];
+        const listings = await fetchAllListingsClient();
         const transformedCars = transformApiListingsToCars(listings);
         setCars(transformedCars);
+        setFetchedAt(new Date().toLocaleString('nl-BE', { 
+          dateStyle: 'medium', 
+          timeStyle: 'medium' 
+        }));
       } catch (error) {
         console.error('Error fetching listings:', error);
         setCars([]);
@@ -133,9 +133,16 @@ export function AanbodPage({ cars: propCars }: AanbodPageProps) {
       <section className="py-8 sm:py-10 bg-editorial min-h-[60vh]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-            <p className="font-body text-ink font-medium">
-              {filteredCars.length} Resultaten
-            </p>
+            <div>
+              <p className="font-body text-ink font-medium">
+                {filteredCars.length} Resultaten
+              </p>
+              {fetchedAt && (
+                <p className="font-body text-xs text-muted mt-1">
+                  Gegevens opgehaald op: {fetchedAt}
+                </p>
+              )}
+            </div>
             <div className="flex items-center gap-2">
               <label htmlFor="sort-aanbod" className="font-body text-sm text-muted shrink-0">
                 Sorteren:

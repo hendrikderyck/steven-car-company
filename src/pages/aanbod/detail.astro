@@ -1,0 +1,12 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import '../../styles/as24-detail.css';
+import { ListingDetailPage } from '../../components/ListingDetailPage';
+
+// Static page - ID is read from ?id=xxx in the URL (client-side)
+const pageTitle = `Voertuig – Steven Car Company BV`;
+---
+
+<Layout title={pageTitle} description="Voertuigdetails">
+  <ListingDetailPage client:load />
+</Layout>

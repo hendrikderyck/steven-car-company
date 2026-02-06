@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { Car } from "../data/cars";
 import { isRealListingId } from "../utils/listings";
 import { transformApiListingsToCars } from "../utils/api-listing-to-car";
-import type { ApiListing } from "../utils/api-listing-to-car";
+import { fetchAllListingsClient } from "../utils/client-listings";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,6 +26,7 @@ function formatPrice(price: number) {
 export function HomeHero({ highlightedCars: propCars = [] }: HomeHeroProps) {
   const [highlightedCars, setHighlightedCars] = useState<Car[]>(propCars.slice(0, HIGHLIGHT_COUNT));
   const [isLoading, setIsLoading] = useState(propCars.length === 0);
+  const [fetchedAt, setFetchedAt] = useState<string | null>(null);
 
   // Fetch listings at runtime
   useEffect(() => {
@@ -37,14 +38,13 @@ export function HomeHero({ highlightedCars: propCars = [] }: HomeHeroProps) {
     async function fetchListings() {
       try {
         setIsLoading(true);
-        const response = await fetch('/api/listings.json');
-        if (!response.ok) {
-          throw new Error('Failed to fetch listings');
-        }
-        const data = await response.json();
-        const listings = data.listings as ApiListing[];
+        const listings = await fetchAllListingsClient();
         const cars = transformApiListingsToCars(listings);
         setHighlightedCars(cars.slice(0, HIGHLIGHT_COUNT));
+        setFetchedAt(new Date().toLocaleString('nl-BE', { 
+          dateStyle: 'medium', 
+          timeStyle: 'medium' 
+        }));
       } catch (error) {
         console.error('Error fetching listings:', error);
         setHighlightedCars([]);
@@ -258,6 +258,11 @@ export function HomeHero({ highlightedCars: propCars = [] }: HomeHeroProps) {
           <div ref={highlightHeaderRef} className="home-highlight-header">
             <span className="home-highlight-label">Aanbod</span>
             <h2 id="home-highlight-heading" className="home-highlight-title">In de kijker</h2>
+            {fetchedAt && (
+              <p className="font-body text-xs text-muted mt-2">
+                Gegevens opgehaald op: {fetchedAt}
+              </p>
+            )}
           </div>
           <div ref={highlightGridRef} className="home-highlight-grid">
             {isLoading ? (
@@ -273,7 +278,7 @@ export function HomeHero({ highlightedCars: propCars = [] }: HomeHeroProps) {
                 <a
                   key={car.id}
                   ref={(el) => { highlightCardsRef.current[i] = el; }}
-                  href={isRealListingId(car.id) ? `/aanbod/${car.id}/` : "/aanbod/"}
+                  href={isRealListingId(car.id) ? `/aanbod/detail?id=${encodeURIComponent(car.id)}` : "/aanbod/"}
                   className="home-highlight-card"
                 >
                   <div className="home-highlight-img-wrap">
